@@ -1,1 +1,1 @@
-# Yolo(You lOok onLy Once)
+# Yolo(You Look OnLy Once)
