@@ -1,5 +1,3 @@
-# Faster - r - cnn
-
 # 논문  
 [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf)
 
@@ -28,3 +26,6 @@
 독립적으로 훈련되는 RPN과 Fast R-CNN은 모두 다른 방식으로 그들의 컨베이어를 수정할 것이다. 따라서 우리는 두 개의 별도 네트워크를 학습하기 보다는 두 개의 네트워크 사이에서 컨베이어를 공유할 수 있는 기술을 개발할 필요가 있다. 이는 단순히 RPN과 Fast R-CNN을 모두 포함하는 단일 네트워크를 정의한 다음 역 전파와 함께 최적화하는 것만큼 쉽지 않다. 그 이유는 Fast R-CNN 훈련은 고정된 객체 제안에 의존하며 Fast R-CNN을 학습하면서 동시에 제안 메커니즘을 변경할지 여부가 우선 순위가 명확하지 않기 때문이다. 이 공동 최적화는 향후 작업에 흥미로운 질문이지만, 우리는 교차 최적화를 통해 공유 기능을 학습하는 실용적인 4단계 훈련 알고리즘을 개발한다.
 
 첫 번째 단계에서는 위에서 설명한 대로 RPN을 훈련한다. 이 네트워크는 ImageNet 사전 교육된 모델과 지역 제안 작업에 대해 엔드 투 엔드 미세 조정된 모델로 초기화됩니다. 두 번째 단계에서, 우리는 1단계 RPN에 의해 생성된 제안을 사용하여 Fast R-CNN에 의한 별도의 탐지 네트워크를 훈련시킨다. 또한 이 감지 네트워크는 ImageNet 사전 교육 모델에 의해 초기화됩니다. 이 시점에서 두 네트워크는 컨베이어를 공유하지 않는다. 세 번째 단계에서는 검출기 네트워크를 사용하여 RPN 훈련을 초기화하지만 공유 컨베이어를 수정하고 RPN 고유의 레이어만 미세 조정한다. 이제 두 네트워크는 콘트롤러를 공유합니다. 마지막으로, 공유 컨베이어를 고정하여 Fast R-CNN의 fc 레이어를 미세 조정한다. 따라서 두 네트워크는 동일한 컨베이어를 공유하고 통합 네트워크를 형성한다.
+
+### Implementation Details
+For anchors, we use 3 scales with box areas of 1282, 2562, and 5122 pixels, and 3 aspect ratios of 1:1, 1:2, and 2:1. We note that our algorithm allows the use of anchor boxes that are larger than the underlying receptive field when predicting large proposals. Such predictions are not impossible— one may still roughly infer the extent of an object if only the middle of the object is visible. With this design, our solution does not need multi-scale features or multi-scale sliding windows to predict large regions
