@@ -295,14 +295,19 @@
 - YOLO는 Fast R-CNN보다 훨씬 더 적은 배경 에러를 발생시킨다.
 - Fast R-CNN에서 YOLO를 사용함으로써 배경 디텍션을 제거해서 큰 성능 향상을 얻을 수 있다.
 - R-CNN이 예측하는 모든 바운딩박스에서 대해 우리는 YOLO가 유사한 박스를 예측했는지를 확인할 수 있다. 만약 그렇다면 우리는 그 예측에 YOLO의 예측된 가능성을 기반으로 가중치를 줄 수 있다. 그리고 두 개의 박스를 겹친다
+<img src='https://user-images.githubusercontent.com/67793544/103633982-ce964300-4f89-11eb-8b13-290a95186b5a.png' width=50%, height=50%>
+
+*source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
+
 - Fast R-CNN의베스트 모델은 VOC 2007에서 mAP가 71.8%였다. YOLO와 결합했을 때 3.2% mAP가올라 75%가 되었다.
 - 우리는 또 top fast R-CNN모델과 다른 버전들을 결합해보았다. 그 결과 mAP가 약간 상승했다.
 - YOLO로 인한 상승은 단순히 모델간 앙상블 효과가 아니다. 다른 fast R-CNN버전과의 결합에서는 그 효과가 미미했기 때문이다. 
 - 이것은 정확하게 YOLO가 test에서 다른 방법으로 오차를 만들기 때문이다. 이것이 fast R-CNN의 성능 향상에 분명히 효과적이다.
 - 하지만 불행하게도 이러한 결합은 YOLO의 속도에는 도움을 주지 못했다. 각각의 모델을 돌려야 했고 결과를 결합해야했기 때문이다.
 
-
-
-
+### 4-4. VOC 212 Results
+### 4-5. Generalizability: Person Detenction In Artwork
+## 5. Real-Tiem Detection In the World
+## 6. Conclusion
 
 
