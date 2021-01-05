@@ -5,7 +5,7 @@
 - 지금의 많은 탐지 시스템들은 object detection을 위해 classifier를 용도 변경 하고 있다
 - DPM은 sliding window방식으로, R-CNN과 같은 최근의 접근들은 region proposal 방식으로 object detection을 수행하고자 하지만 이렇게 복합적인 파이프라인은 느리고 최적화도 어렵다.
 
-### ``` "We reframe object detection as a single regression problem, straight from image pixels to bounding box coordinates and class probabilities."```
+> ```"We reframe object detection as a single regression problem, straight from image pixels to bounding box coordinates and class probabilities."```
 - YOLO는 object detection을 이미지 픽셀에서부터 바운딩박스의 조정, 클래스의확률까지 한 번에 하는 single 회귀 문제로 reframe한다
 - YOLO시스템에서 당신은 이미지에 어떤 물체가 있고 어디에 있는지 예측하기 위해 단 한번만 보면 된다.
 
@@ -194,9 +194,10 @@
 
 ## 3. Comparison to Other Detection System
 - classifier, localizer 들과의 비교
+- 아래 표는 논문의 내용을 정리한 표
 
 |구분|DPM|R-CNN|Deep-multibox|Overfeat|MultiGrasp|
-|---|---|---|---|---|---|
+|:---:|:-----|:-----|:-----|:-----|:-----|
 |특징|-sliding window 접근<br>-파이프라인적접근|-sliding window 대신 region proposal 사용<br>-파이프라인적 접근<br>-느린속도<br>-2000개의 바운딩박스제안|- region of interest를 찾는데 Selective search가 아닌 CNN을 사용<br>-컨피던스 예측치를 단일 클래스 예측치로 대체함으로써 단일물체 탐지 수행가능<br>-일반 물체 디텍션은 불가<br>-파이프라인적 접근, 추가적인 이미지 분류 필요|-Localization과 디텍션을 수행하기 위해 CNN 학습<br>-sliding window detection을 효율적으로 수행<br>-파이프라인적 접근(분리된시스템)<br>-위치정보를 최적화하지만 detection을 수행하지는 않음<br>-Overfeat은 전역적인 맥락을 보지 못하여 중대한 후작업을 요구함|-바운딩 박스 예측을 위한 Grid기반의 접근은 MultiGrasp의 grasps에 대한 회귀에 근간<br>-grasp의 탐지는 물체 탐지보다 훨씬 간단<br>- MultiGrasp는 단지 물체를 포함하고 있는 이미지에 대해 graspable한 단일 지역을 예측<br>-사이즈나 위치를 추정하거나 물체를 경계짓고 클래스를 예측하지 않아도 됨
 |YOLO|-이질적인 부분을 단일 CNN으로 대체하여 특징 추출, 바운딩박스 예측, NPS, 맥락적 지역설정 동시 수행|-잠정적 바운딩박스 제안, conv layer를 이용한 scoring 유사<br>-공간적제약을 강화해 동일 물체에 대한 중복 탐지를 완화<br>-단 98개의 바운딩박스 제안|- 바운딩 박스의 예측을 위해 CNN을 사용하지만 YOLO는 완전한 디텍션 시스템|-단일시스템<br>-전역적 맥락에서 이미지를 파악|-YOLO는 작업의 설계에 있어서 MultiGrasp와 유사<br>-YOLO는 이미지에 있는 다양한 클래스의 많은 물체들에 대해 바운딩 박스와 class가능성을 모두 예측|
 
@@ -241,5 +242,30 @@
   - YOLO는 이미지에 있는 다양한 클래스의 많은 물체들에 대해 바운딩 박스와 class가능성을 모두 예측한다.
 
 ## 4. Experiment
+- PASCAL VOC 2007을 가지고 다른 실시간 탐지 시스템들과 YOLO를 비교할 것이다.
+- YOLO와 R-CNN의 변형 사이의 차이를 이해하기 위해 우리는 YOLO와 Fast R-CNN에 의해 만들어진 VOC2007의 에러를 탐색한다. 
+- 다른 에러의 프로파일에 기반하여 우리는 YOLO가 Fast R-CNN 디텍션에 리소스로 사용될 수 있다는 것을 보았고 큰 성능 향상과 함께 배경을 잘못인식하는 에러를 줄이는 것을 보았다. 
+- 우리는 또한 VOC 2012결과를 보여주고 mAP를 가장 최신의 모델과 비교한다.
+- 결국 우리는 YOLO가 다른 탐지기들에 비해 두 개의 artwork dataset에 대해서 새로운 도메인에서 더 잘 일반화한다는 것을 확인했다.
+
+### 4-1. 다른 실시간 시스템과의 비교
+- 많은 연구들이 표준적인 탐색의 파이프라인을 빠르게 하고자 노력했다.
+- 그러나 Sadeghi 외의 연구자들만이 실질적으로 실시간으로 돌아가는 디텍션시스템을 만들었다 (30 fps or better)
+- 우리는 YOLO를 30hz 또는 100hz에서 구동되는 그들의 DPM이실행되는 GPU에서 비교한다.
+- 물체 탐지 시스템에서 이용 가능한 정확성과 성능의 tradeoff를 설명하기 위해 다른 모델들의 상대적인 mAP와 속도를 비교할 것이다. 
+- Fast YOLO는 PASCAL에 대해 우리가 아는 한 가장 빠른 디텍션 방법이다. 이것은 현존하는 가장 빠른 물체 디텍터이다.
+- 52.7%의 mAP를 갖는데 이것은 이전의 실시간 탐지기의 두 배가 넘는 정확성이다.
+- YOLO는 실시간 성능을 유지하며 mAP를63.4% 까지높였다
+- 우리는 또한 VGG16을 이용해서 YOLO를학습시켰다. 이 모델은 더 정확하지만 YOLO보다 매우 느리다.
+- Fastest DPM은 큰 mAP의손실 없이 효과적으로 DPM의속도를 높였다
+- 그러나 여전히 2가지 요소에서 실시간 퍼포먼스를 놓치고 있다
+- 이것은 또한 neural network접근에 비해 DPM의 상대적으로 낮은 디텍션 정확도에 의해 제한된다
+- R-CNN은 셀렉티브 서치를 고정된 바운딩박스 제안으로 변경했다. R-CNN보다 훨씬 빨라졌지만 여전히 실시간에는 미치지 못했고 고정된바운딩 박스가 좋은 제안을 하지 못함으로써 큰 정확도의 손실을 가져왔다
+- Fast R-CNN 은 R-CNN의 분류 단계에서 속도를 높였지만 여전히 셀렉티브 서치에 의존하고 있으며 이것은 이미지에서 바운딩 박스를 만드는데 2초정도의 시간이 소요된다. 그래서 이것은 높은 mAP를 갖지만 매우느리다
+최근의 faster R-CNN은 셀렉티브 서치를 neural network로 대체하였다. 우리의 테스트에서 가장 정확한 모델은 7fps를 달성했고, 덜 정확하고 작은 모델은 18fps를달성했다
+Faster R-CNN의 VGG-16version은 YOLO보다 10mAP가 더 높았지만 6배나 느렸다
+Zeiler-Fergus Faster R-CNN은 YOLO보다 단 2.5배 느렸지만 더 낮은 정확도를 보였다.
+
+
 
 
