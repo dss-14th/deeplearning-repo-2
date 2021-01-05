@@ -31,7 +31,7 @@
 - YOLO는 최첨단의 detection system들에 비해서 정확도는 뒤떨어진다. 하지만 이미지에서 빠르게 물체를 찾아내고 특히 작은 물체의 위치를 정확히 표현한다.
 
 ## 2. Unified Detection
-### ``` "We unify the seperate compenents of object detection into a single neural network." ```
+> ``` "We unify the seperate compenents of object detection into a single neural network." ```
 - YOLO 네트워크는 각각의 바운딩 박스를 예측하기 위해 전체 이미지의 특징들을 이용한다.
 - 이미지에 대해서는 모든 클래스의 모든 바운딩 박스를 동시에 예측한다
 - YOLO의 네트워크가 이미지 전체와 이미지에 있는 모든 물체들에 대해 전역적으로 (globally) 판단하고 있음을 의미한다
@@ -253,6 +253,11 @@
 - 그러나 Sadeghi 외의 연구자들만이 실질적으로 실시간으로 돌아가는 디텍션시스템을 만들었다 (30 fps or better)
 - 우리는 YOLO를 30hz 또는 100hz에서 구동되는 그들의 DPM이실행되는 GPU에서 비교한다.
 - 물체 탐지 시스템에서 이용 가능한 정확성과 성능의 tradeoff를 설명하기 위해 다른 모델들의 상대적인 mAP와 속도를 비교할 것이다. 
+
+![image](https://user-images.githubusercontent.com/67793544/103632670-02706900-4f88-11eb-9fdc-8a3adc68726d.png)
+
+*source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
+
 - Fast YOLO는 PASCAL에 대해 우리가 아는 한 가장 빠른 디텍션 방법이다. 이것은 현존하는 가장 빠른 물체 디텍터이다.
 - 52.7%의 mAP를 갖는데 이것은 이전의 실시간 탐지기의 두 배가 넘는 정확성이다.
 - YOLO는 실시간 성능을 유지하며 mAP를63.4% 까지높였다
@@ -260,11 +265,43 @@
 - Fastest DPM은 큰 mAP의손실 없이 효과적으로 DPM의속도를 높였다
 - 그러나 여전히 2가지 요소에서 실시간 퍼포먼스를 놓치고 있다
 - 이것은 또한 neural network접근에 비해 DPM의 상대적으로 낮은 디텍션 정확도에 의해 제한된다
-- R-CNN은 셀렉티브 서치를 고정된 바운딩박스 제안으로 변경했다. R-CNN보다 훨씬 빨라졌지만 여전히 실시간에는 미치지 못했고 고정된바운딩 박스가 좋은 제안을 하지 못함으로써 큰 정확도의 손실을 가져왔다
+- R-CNN Minus R은 셀렉티브 서치를 고정된 바운딩박스 제안으로 변경했다. R-CNN보다 훨씬 빨라졌지만 여전히 실시간에는 미치지 못했고 고정된바운딩 박스가 좋은 제안을 하지 못함으로써 큰 정확도의 손실을 가져왔다
 - Fast R-CNN 은 R-CNN의 분류 단계에서 속도를 높였지만 여전히 셀렉티브 서치에 의존하고 있으며 이것은 이미지에서 바운딩 박스를 만드는데 2초정도의 시간이 소요된다. 그래서 이것은 높은 mAP를 갖지만 매우느리다
-최근의 faster R-CNN은 셀렉티브 서치를 neural network로 대체하였다. 우리의 테스트에서 가장 정확한 모델은 7fps를 달성했고, 덜 정확하고 작은 모델은 18fps를달성했다
-Faster R-CNN의 VGG-16version은 YOLO보다 10mAP가 더 높았지만 6배나 느렸다
-Zeiler-Fergus Faster R-CNN은 YOLO보다 단 2.5배 느렸지만 더 낮은 정확도를 보였다.
+- 최근의 Faster R-CNN은 셀렉티브 서치를 neural network로 대체하였다. 우리의 테스트에서 가장 정확한 모델은 7fps를 달성했고, 덜 정확하고 작은 모델(ZF)은 18fps를달성했다
+- Faster R-CNN의 VGG-16version은 YOLO보다 10mAP가 더 높았지만 6배나 느렸다
+- Zeiler-Fergus Faster R-CNN은 YOLO보다 단 2.5배 느렸지만 더 낮은 정확도를 보였다.
+
+### 4-2. VOC 2007에러 분석
+- YOLO와 최신 디텍터들의 차이에 대한 더 깊은 연구를 위해 우리는 VOC2007의 결과를 구체적으로 뜯어봤다.
+- 우리는 YOLO를 fast R-CNN과 비교했는데, fast R-CNN이 PASCAL dataset에 대해 가장 최상의 퍼포먼스를 내는 디텍터 중 하나이고 그 디텍션을 공개적으로 이용 가능하기 때문이다
+- 우리는 Hoiem et al.이 이용했던 방법론을 사용한다 (Diagnosing Error in Object Detectors)
+- 테스트 시, 해당 카테고리에 대해 top N개의 예측을 살펴보고 각 예측은 정확하거나 아래의 오류 유형에 따라 분류됨
+  - Correct: correct class ans IOU > .5 (올바른 클래스이고 IOU가 0.5 초과이면 correct)
+  - Localization: correct class, .1< IOU < .5 (올바른 클래스이고, IOU가 0.1 초과, 0.5 미만이면 localizaion)
+  - Similar: class is similar, IOU > .1 (클래스가 실제물체와 유사하고 IOU가 0.1 초과이면 Similar)
+  - Other: class is wrong, IOU > .1 (클래스가 틀렸으나 IOU가 0.1 초과이면 other)
+  - Background: IOU < .1 for any object (어떤 object이던간에 IOU가 1보다 작으면 background)
+  
+![image](https://user-images.githubusercontent.com/67793544/103633551-3bf5a400-4f89-11eb-801e-f2a46bd9d424.png)
+
+*source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
+
+- 모든 20개 클래스에 대해 평균 에러타임을 각각 보여준다
+- YOLO는 물체의 위치를 올바르게 알아내기 위해 애썼다. 위치 에러는 모든 다른 소스들의 결합한 것보다 YOLO의에러가 더 큰 것을 설명한다
+- Fast R-CNN 훨씬 더 작은 위치 에러를 보였지만 훨씬 더 큰 배경 에러를 나타냈다
+- 상위 탐지 항목 중 13.6%는 개체를 포함하지 않는 잘못된 예측이다. Fast R-CNN은 YOLO보다 배경 탐지를 거의 3배 더 예측한다.
+
+### 4-3. Fast R-CNN과 YOLO의 결합
+- YOLO는 Fast R-CNN보다 훨씬 더 적은 배경 에러를 발생시킨다.
+- Fast R-CNN에서 YOLO를 사용함으로써 배경 디텍션을 제거해서 큰 성능 향상을 얻을 수 있다.
+- R-CNN이 예측하는 모든 바운딩박스에서 대해 우리는 YOLO가 유사한 박스를 예측했는지를 확인할 수 있다. 만약 그렇다면 우리는 그 예측에 YOLO의 예측된 가능성을 기반으로 가중치를 줄 수 있다. 그리고 두 개의 박스를 겹친다
+- Fast R-CNN의베스트 모델은 VOC 2007에서 mAP가 71.8%였다. YOLO와 결합했을 때 3.2% mAP가올라 75%가 되었다.
+- 우리는 또 top fast R-CNN모델과 다른 버전들을 결합해보았다. 그 결과 mAP가 약간 상승했다.
+- YOLO로 인한 상승은 단순히 모델간 앙상블 효과가 아니다. 다른 fast R-CNN버전과의 결합에서는 그 효과가 미미했기 때문이다. 
+- 이것은 정확하게 YOLO가 test에서 다른 방법으로 오차를 만들기 때문이다. 이것이 fast R-CNN의 성능 향상에 분명히 효과적이다.
+- 하지만 불행하게도 이러한 결합은 YOLO의 속도에는 도움을 주지 못했다. 각각의 모델을 돌려야 했고 결과를 결합해야했기 때문이다.
+
+
 
 
 
