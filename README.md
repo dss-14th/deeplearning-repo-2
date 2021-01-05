@@ -7,11 +7,11 @@
 
 
 
-# FatRCNN
-# YOLOv1
-# YOLOv2
-# YOLOv3
-### [paper](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
+### FatRCNN
+### YOLOv1
+### YOLOv2
+### YOLOv3
+#### [paper](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
 
 - yolov3 는 yolo9000과 같이 차원 클러스터링을 통해 앵커 박스로부터 바운딩 박스를 예측한다. 욜로 네트워크는 각 바운딩 박스로부터 4개의 좌표를 예측하고(tx, ty, tw, th), 각 그리드셀의 왼쪽 상단 지점을 기준으로 셀 내부의 위치를 예측해 최종 바운딩 박스 정보를 결정한다.(bx,by, bw, bh)
 
