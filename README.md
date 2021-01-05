@@ -24,3 +24,6 @@
 
 #### predictions across scales
 - yolov3 는 3개의 다른 scale 에서 앵커박스들을 생성하고, 바운딩 박스를 예측한다. 
+"""수식"""
+N : 각 scale 당 그리드셀 크기(13,26,52), 4개의 바운딩박스 좌표, 1개 objectness , 80개의 클래스 예측
+
