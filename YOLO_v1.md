@@ -254,7 +254,7 @@
 - 우리는 YOLO를 30hz 또는 100hz에서 구동되는 그들의 DPM이실행되는 GPU에서 비교한다.
 - 물체 탐지 시스템에서 이용 가능한 정확성과 성능의 tradeoff를 설명하기 위해 다른 모델들의 상대적인 mAP와 속도를 비교할 것이다. 
 
-<img src='https://user-images.githubusercontent.com/67793544/103632670-02706900-4f88-11eb-9fdc-8a3adc68726d.png' width=60%, height=60%>
+<img src='https://user-images.githubusercontent.com/67793544/103632670-02706900-4f88-11eb-9fdc-8a3adc68726d.png' width="40%" height="40%">
 
 *source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
 
@@ -295,7 +295,7 @@
 - YOLO는 Fast R-CNN보다 훨씬 더 적은 배경 에러를 발생시킨다.
 - Fast R-CNN에서 YOLO를 사용함으로써 배경 디텍션을 제거해서 큰 성능 향상을 얻을 수 있다.
 - R-CNN이 예측하는 모든 바운딩박스에서 대해 우리는 YOLO가 유사한 박스를 예측했는지를 확인할 수 있다. 만약 그렇다면 우리는 그 예측에 YOLO의 예측된 가능성을 기반으로 가중치를 줄 수 있다. 그리고 두 개의 박스를 겹친다
-<img src='https://user-images.githubusercontent.com/67793544/103633982-ce964300-4f89-11eb-8b13-290a95186b5a.png' width=50%, height=50%>
+<img src='https://user-images.githubusercontent.com/67793544/103633982-ce964300-4f89-11eb-8b13-290a95186b5a.png' width="50%" height="50%">
 
 *source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
 
