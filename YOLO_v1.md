@@ -254,7 +254,7 @@
 - 우리는 YOLO를 30hz 또는 100hz에서 구동되는 그들의 DPM이실행되는 GPU에서 비교한다.
 - 물체 탐지 시스템에서 이용 가능한 정확성과 성능의 tradeoff를 설명하기 위해 다른 모델들의 상대적인 mAP와 속도를 비교할 것이다. 
 
-![image](https://user-images.githubusercontent.com/67793544/103632670-02706900-4f88-11eb-9fdc-8a3adc68726d.png)
+<img src='https://user-images.githubusercontent.com/67793544/103632670-02706900-4f88-11eb-9fdc-8a3adc68726d.png' width=60%, height=60%>
 
 *source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
 
