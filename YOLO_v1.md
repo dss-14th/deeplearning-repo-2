@@ -1,49 +1,56 @@
 # You Only Look Once: Unified, Real-Time Object Detection
+[paper](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf)
 ## 1. Introduction
-- 이미지를 흘끗 보고도 즉각적으로 이미지에 어떤 물체가 있고, 어디에 있고, 어떻게 상호작용 하는지 알 수 있다.
+- 인간은 이미지를 흘끗 보고도 즉각적으로 이미지에 어떤 물체가 있고, 어디에 있고, 어떻게 상호작용 하는지 알 수 있다.
 - 물체감지를 위한 빠르고 정확한 알고리즘은 컴퓨터가 특수 센서 없이도 자동차를 운전하도록 하고, 보조장치가 인간 사용자에게 실시간 장면정보를 전달할 수 있게 하며, 범용 반응로복 시스템의 가능성을 열어줄 것이다.
 - 지금의 많은 탐지 시스템들은 object detection을 위해 classifier를 용도 변경 하고 있다
 - DPM은 sliding window방식으로, R-CNN과 같은 최근의 접근들은 region proposal 방식으로 object detection을 수행하고자 하지만 이렇게 복합적인 파이프라인은 느리고 최적화도 어렵다.
 
 > ```"We reframe object detection as a single regression problem, straight from image pixels to bounding box coordinates and class probabilities."```
-- YOLO는 object detection을 이미지 픽셀에서부터 바운딩박스의 조정, 클래스의확률까지 한 번에 하는 single 회귀 문제로 reframe한다
+- YOLO는 object detection을 이미지 픽셀에서부터 바운딩박스의 조정, 클래스의확률까지 한 번에 하는 single 회귀 문제로 reframe한다.
 - YOLO시스템에서 당신은 이미지에 어떤 물체가 있고 어디에 있는지 예측하기 위해 단 한번만 보면 된다.
 
 
 #### Benefits over traditional method of object detection
 - _**Benefit 1. YOLO is extremely fast**_
-  - Detection을 회귀문제로 보기 때문에 복잡한 파이프라인이 필요 없다
-  - 단순히 우리의 뉴럴 넷을 새로운 이미지에 적용하고 예측하는 것 뿐
-  - TitanX GPU에서 no batch로했을 때 기본 네트워크는 45프레임/sec의속도를 갖는다. Fast version은140 fps의속도이다
+  - Detection을 회귀문제로 보기 때문에 복잡한 파이프라인이 필요 없다.
+  - 단순히 우리의 뉴럴 넷을 새로운 이미지에 적용하고 예측하는 것 뿐이다.
+  - TitanX GPU에서 no batch로 했을 때 기본 네트워크는 45fps의 속도를 갖는다. Fast version은 140fps의 속도이다
   - 이 말은 즉, 스트리밍 비디오에서 실시간으로 작업이 가능함을 의미한다. 25 밀리세컨(0.025)보다 작은 지연만 있을 뿐이다
-  - 게다가 YOLO는 다른 실시간 시스템에 비해 2배 이상 높은 mAP를 갖는다
+  - 게다가 YOLO는 다른 실시간 시스템에 비해 2배 이상 높은 mAP를 갖는다.
  
 - _**Benefit 2. YOLO resons globally about the image when making predictions**_
-  - Sliding window나 region proposal 기반의 기술들과는 달리 YOLO는 training, test 동안 전체 이미지를 본다
-  - 그래서 물체의 모양뿐 아니라 클래스에 대한 맥락적 정보까지 표현한다
-  - 최고의 탐지 방법인 fast R-CNN 조차도 이미지 배경의 일부를 물체로 인식하는 실수를 하기도 한다. 왜냐하면 더 큰 맥락을 보지 못하기 때문이다.
-  - YOLO는 배경을 잘못인식하는 에러를 fast R-CNN의 반도 안되게 줄였다.
+  - Sliding window나 region proposal 기반의 기술들과는 달리 YOLO는 training, test 동안 전체 이미지를 본다.
+  - 그래서 물체의 모양뿐 아니라 클래스에 대한 맥락적 정보까지 표현한다.
+  - 최고의 탐지 방법인 Fast R-CNN 조차도 이미지 배경의 일부를 물체로 인식하는 실수를 하기도 한다. 왜냐하면 더 큰 맥락을 보지 못하기 때문이다.
+  - YOLO는 배경을 잘못인식하는 에러를 Fast R-CNN의 반도 안되게 줄였다.
  
 - _**Benefit 3. YOLO learns generalizable representations of objects**_
   - 자연스러운 이미지를 학습하고 예술작품을 가지고 테스트할 때 YOLO는 DPM이나 R-CNN을 큰 격차로 뛰어넘는 성과를 냈다.
   - YOLO는 일반화시키는 능력이 뛰어나서 새로운 도메인이나 예상치 못한 인풋에도 심각한 오류 없이 탐지를 수행하는 것으로 보인다.
   
-- YOLO는 최첨단의 detection system들에 비해서 정확도는 뒤떨어진다. 하지만 이미지에서 빠르게 물체를 찾아내고 특히 작은 물체의 위치를 정확히 표현한다.
+- YOLO는 최첨단의 detection system들에 비해서 정확도는 떨어진다. 이미지에서 빠르게 물체를 찾아낼 수 있지만 일부 물체, 특히 작은 물체의 위치를 정밀하게 찾지는 못한다.
 
 ## 2. Unified Detection
 > ``` "We unify the seperate compenents of object detection into a single neural network." ```
+
+> ``` "우리는 물체 감지의 개별 구성 요소를 단일 신경망 네트워크로 통합한다." ```
 - YOLO 네트워크는 각각의 바운딩 박스를 예측하기 위해 전체 이미지의 특징들을 이용한다.
-- 이미지에 대해서는 모든 클래스의 모든 바운딩 박스를 동시에 예측한다
-- YOLO의 네트워크가 이미지 전체와 이미지에 있는 모든 물체들에 대해 전역적으로 (globally) 판단하고 있음을 의미한다
+- 이미지에 대해서는 모든 클래스의 모든 바운딩 박스를 동시에 예측한다.
+- YOLO의 네트워크가 이미지 전체와 이미지에 있는 모든 물체들에 대해 전역적으로 (globally) 판단하고 있음을 의미한다.
 - YOLO는 높은 수준의 average precision을 유지하면서도 end-to-end training을 하고 실시간의 속도를 내도록 설계되었다.
 
 - *YOLO의 detection 방법*
   - 이미지를  S x S grid로 나눈다
   - 물체의 중심이 grid cell안에 속한다면 해당 그리드 셀은 그 물체를 탐지할 책임을 갖는다.
   - 각각의 그리드 셀은 Bounding box 와 confidence score를 예측한다. 이 신뢰도 점수는 상자에 객체가 들어 있다는 확신과 상자의 예측이 얼마나 정확한지 나타낸다.
-  - 우리는 confidence를 Pr(Object) ∗ IOU <sup>truth</sup><sub>pred</sub> 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
+  - 우리는 confidence를 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
+  
+  -  <img src="https://user-images.githubusercontent.com/67793544/103729377-a2c79b80-5023-11eb-8ce8-f31834d9bc10.png" width="30%" height="30%"> 
+ 
   - 만약 셀 안에 어떤 물체도 존재하지 않는다면 confidence score는 0이 되어야 한다
   - 그렇지 않으면 신뢰 점수가 예측 상자와 실측값 사이의 IOU와 같아야 한다.
+  - For evaluating YOLO on PASCAL VOC, we use S = 7, B = 2. PASCAL VOC has 20 labelled classes so C = 20. Our final prediction is a 7 × 7 × 30 tensor.
   
 <Blockquote>
   
@@ -92,8 +99,7 @@
   - 30 : 5/ 5/ 20으로 구분
     - 5: 그리드 셀의 첫 번째 바운딩박스의 좌표 (x, y, w, h, c) _c는 해당 바운딩박스에 물체가 있을 확률 
     - 5: 그리드 셀의 두 번째 바운딩박스의 좌표 (x, y, w, h, c) _c는 해당 바운딩박스에 물체가 있을 확률
-    - 20: class의 수_ YOLO에서 사용하는 클래스가 20개인 것이 아님 (이미지넷은 1000개의 class를 가짐)
-      - 여기서의 클래스의 수 20은 바운딩 박스 안의 물체가 속할 클래스의 가능성을 상위 20개만 표시한 것
+    - 20: class의 수_ PASCAL VOC dataset을 사용해서 평가했는데, 해당 데이터 셋의 클래스가 20개여서 20개의 각 클래스에 속할 확률
       - 20개의 각 클래스별 확률은 첫 번째, 두 번째 바운딩박스 좌표의 c(물체가 해당 박스에 있을 확률)와 각각 곱해져서 최종적으로 20개의 class score를 만듦 
 
 **predict tensor 구성: 1,2 번째 바운딩박스의 좌표구성**     
@@ -196,10 +202,7 @@
 - classifier, localizer 들과의 비교
 - 아래 표는 논문의 내용을 정리한 표
 
-|구분|DPM|R-CNN|Deep-multibox|Overfeat|MultiGrasp|
-|:---:|:-----|:-----|:-----|:-----|:-----|
-|특징|-sliding window 접근<br>-파이프라인적접근|-sliding window 대신 region proposal 사용<br>-파이프라인적 접근<br>-느린속도<br>-2000개의 바운딩박스제안|- region of interest를 찾는데 Selective search가 아닌 CNN을 사용<br>-컨피던스 예측치를 단일 클래스 예측치로 대체함으로써 단일물체 탐지 수행가능<br>-일반 물체 디텍션은 불가<br>-파이프라인적 접근, 추가적인 이미지 분류 필요|-Localization과 디텍션을 수행하기 위해 CNN 학습<br>-sliding window detection을 효율적으로 수행<br>-파이프라인적 접근(분리된시스템)<br>-위치정보를 최적화하지만 detection을 수행하지는 않음<br>-Overfeat은 전역적인 맥락을 보지 못하여 중대한 후작업을 요구함|-바운딩 박스 예측을 위한 Grid기반의 접근은 MultiGrasp의 grasps에 대한 회귀에 근간<br>-grasp의 탐지는 물체 탐지보다 훨씬 간단<br>- MultiGrasp는 단지 물체를 포함하고 있는 이미지에 대해 graspable한 단일 지역을 예측<br>-사이즈나 위치를 추정하거나 물체를 경계짓고 클래스를 예측하지 않아도 됨
-|YOLO|-이질적인 부분을 단일 CNN으로 대체하여 특징 추출, 바운딩박스 예측, NPS, 맥락적 지역설정 동시 수행|-잠정적 바운딩박스 제안, conv layer를 이용한 scoring 유사<br>-공간적제약을 강화해 동일 물체에 대한 중복 탐지를 완화<br>-단 98개의 바운딩박스 제안|- 바운딩 박스의 예측을 위해 CNN을 사용하지만 YOLO는 완전한 디텍션 시스템|-단일시스템<br>-전역적 맥락에서 이미지를 파악|-YOLO는 작업의 설계에 있어서 MultiGrasp와 유사<br>-YOLO는 이미지에 있는 다양한 클래스의 많은 물체들에 대해 바운딩 박스와 class가능성을 모두 예측|
+![image](https://user-images.githubusercontent.com/67793544/103736758-330ddc80-5034-11eb-8048-80598bd0ba6d.png)
 
 - DPM (Deformable Parts Models)
   - sliding window 접근법을 사용한다.
@@ -306,8 +309,49 @@
 - 하지만 불행하게도 이러한 결합은 YOLO의 속도에는 도움을 주지 못했다. 각각의 모델을 돌려야 했고 결과를 결합해야했기 때문이다.
 
 ### 4-4. VOC 212 Results
+
+![image](https://user-images.githubusercontent.com/67793544/103634171-0e5d2a80-4f8a-11eb-9c80-b4c69eb277c4.png)
+
+- VOC2012 test set에서는 YOLO가57.9%의 mAP를 나타냈다.
+- 이것은 현재의 최첨단 기술보다는 낮은 수치이고 VGG16을 사용하는 original R-CNN과 유사한 수치이다. 
+- Table3을보면 우리의 시스템은 가까운 다른 경쟁자들에 비해 작은 물체 탐지에 어려움을 겪고 있다.
+- 병이나 배, tv, 모니터와 같은 카테고리에서 YOLO는 R-CNN보다 8-10% 정도 낮은 mAP를 나타낸다.
+- 하지만 고양이나 기차와 같은 카테고리에 대해서 YOLO는 더 높은 성능을 보였다.
+- 우리가 만든 Fast R-CNN과 YOLO의 결합 모델은 디텍션 방법에서 가장 높은 성과를 냈다.
+- Fast R-CNN은 YOLO와 결합하여 2.3%의 성능을 향상시키며 공개 리더보드에서 5계단 상승하였다.
+
 ### 4-5. Generalizability: Person Detenction In Artwork
+- 사물 탐지를 위한 학문적인 데이터셋은 동일한 배포자에 의해 training과 test dataset을 배포받게 된다.
+- 실제 적용에서는 가능한 모든 사용 사례를 예측하기가 어려우며 테스트 데이터는 시스템이 이전에 살펴본 것과 다를 수 있다.
+- 우리는 예술작품에서의 사람 디텍션을 테스트하기 위한 두 데이터셋으로 Picasso dataset과 people-art dataset에 대해 다른 디텍션 시스템과 YOLO를 비교했다.  
+- 5번 그림은 욜로와 다른 디텍션 방법의 성능 비교를 보여준다
+
+<img src='https://user-images.githubusercontent.com/67793544/103728977-b1618300-5022-11eb-89ca-5dd0efd91c11.png' width="70%" height="70%">
+<img src='https://user-images.githubusercontent.com/67793544/103729096-fdacc300-5022-11eb-8ce0-1628056e4137.png' width="70%" height="70%">
+
+*source: Joseph Redmon et al(2016). You Only Look Once: Unified, Real-Time Object Detection.
+
+- R-CNN은 VOC2007에 대해 높은 AP를 갖는다.
+- 그러나 R-CNN은 artwork에 적용했을 때 상당히 많이 떨어진다.
+- R-CNN은 바운딩박스 제안에 selective search를사용하는데 이것이 원본 이미지를 변형시킨다.
+- R-CNN의 분류 단계에서는 단순히 아주 작은 지역만을 보며, 좋은 제안이 필요할 뿐이다.
+- DPM은 artwork에 적용할 때도 AP를 꽤 잘 유지한다.
+- 이전의 이론적 업적들은 DPM이 물체의 쉐입과 레이아웃에 대한 강력한 공간적 모델을 갖기 때문에 성능이 좋았음을 증명한다.
+- DPM은 R-CNN만큼 많이 점수가 떨어지지는 않지만 애초에 낮은 AP에서 시작한다.
+- YOLO는 VOC2007에서 좋은 성능을 보였고 artwork에 적용했을 때의 AP도 다른 방법들에 비해 덜 떨어졌다.
+- DPM과같이 YOLO는 일반적으로 물체가 나타나는 위치와 물체간의 관계 뿐 아니라 물체의 모양과 사이즈까지 견본으로 만든다.
+- 예술작품과 일반 이미지들은 픽셀의 수준이 매우 다르지만 물체의 사이즈나 모양은 유사하다. 그래서 YOLO는 여전히 좋은 바운딩박스를 그리고 탐지할 수 있는 것이다
+
 ## 5. Real-Tiem Detection In the World
+- YOLO는 빠르고 정확한 물체 탐지기이며, 이것은 컴퓨터 비전의 적용에 적합하다.
+- 우리는 YOLO를 웹캠과 연결했고 카메라에서 이미지를 가지고 오는 시간과 탐지를 보여주는 시간을 포함해서 실시간 퍼포먼스를 유지하는지 확인했다.
+- YOLO는 이미지를 개별적으로 처리하지만 웹캠과 연결하면 tracking시스템처럼 작동하며, 물체가 움직이면서 외관이 변하는 것을 감지한다.
+
 ## 6. Conclusion
+- 우리는 물체 탐지의 통합된 모델로서 YOLO를 소개했다.
+- 우리의 모델은 만들기 단순하고 전체 이미지를 바로 학습한다.
+- 분류 기반의 접근과는 다르게 YOLO는 탐지 성능과 다이렉트로 상응하는 로스펑션을 가지고 학습하게 되며, 전체 모델은 통합적으로 train된다.
+- Fast YOLO는 문헌에서는 가장 빠른 범용 물체 탐지기이며,  YOLO는 실시간 객체 탐지에서 최첨단 기술을 적용한다.
+- 또한 YOLO는 새로운 도메인에도 잘 일반화되어 빠르고 강력한 객체 탐지에 의존하는 애플리케이션에 이상적이다. 
 
 
