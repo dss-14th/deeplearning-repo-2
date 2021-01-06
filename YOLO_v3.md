@@ -26,6 +26,8 @@ N : 각 scale 당 그리드셀 크기(13,26,52), 4개의 바운딩박스 좌표,
 - yolov3 에 대해 새로운 feature extractor를 사용한다. 우리의 새로운 네트워크는 YOLOv2 구조 및 YOLOv2의 backbone 이었던 Darknet-19 와 residual network 로 구성되어있다. 연속적인 3 by 3, 1by 1 컨볼루션 레이어를 사용하며, shortcut connection을 사용해 상대적으로 커졌다. 총 53개의 컨볼루션 레이어로 구성된다.(Darknet-53)
 Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효과적이다.
 
+<img width="476" alt="스크린샷 2021-01-06 오후 1 04 27" src="https://user-images.githubusercontent.com/68367329/103729593-21bcd400-5024-11eb-9256-759d7fa922f0.png">
+
 ##### 1 by 1 convolutional layer
 
 맥스 풀링 단점 : 특성 맵 자체가 작아지면서 정보가 소실되어 이미지의 해상도가 낮아진다. 1 by 1 convolutional layer 의 경우 특성맵의 크기는 유지한 채, 필터의 갯수를 적게 사용해 이전 레이어보다 차원을 줄인다.이를 통해 특성 맵의 이미지 정보를 압축시킨다.
