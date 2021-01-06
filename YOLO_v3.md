@@ -28,7 +28,7 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 
 맥스 풀링 단점 : 특성 맵 자체가 작아지면서 정보가 소실되어 이미지의 해상도가 낮아진다. 1 by 1 convolutional layer 의 경우 특성맵의 크기는 유지한 채, 필터의 갯수를 적게 사용해 이전 레이어보다 차원을 줄인다.이를 통해 특성 맵의 이미지 정보를 압축시킨다.
 
-
+<img width="714" alt="스크린샷 2021-01-06 오후 1 31 50" src="https://user-images.githubusercontent.com/68367329/103729434-c68ae180-5023-11eb-8dce-dde26f82d8b9.png">
 [출처](https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215)
 
 
