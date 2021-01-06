@@ -2,7 +2,7 @@
 - [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf)
 
 
-- [Source](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
+- [Sources](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
 
 # 요약
 - 기존 Fast R-CNN 속도의 bottleneck이었던 region proposal 생성을 CNN 외부의 알고리즘이 아닌, CNN 내부에 region proposal을 생성할 수 있는 network를 설계함으로써 더욱 빠르면서도 정확한 region proposal을 생성할 수 있습니다. Faster R-CNN은 기존의 Fast R-CNN에 Region proposal network을 추가한 것이 핵심이라고 볼 수 있습니다.
