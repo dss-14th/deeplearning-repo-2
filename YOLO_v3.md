@@ -22,6 +22,11 @@ N : 각 scale 당 그리드셀 크기(13,26,52), 4개의 바운딩박스 좌표,
 
 또한 미리 바운딩 박스의 갯수를 결정하기 위해 k-means clustering을 사용해 앵커박스의 갯수를 지정했다. 3개의 피처맵당 3개의 클러스터를 사용했다.(3*3=9개의 anchor box)
 
+##### yolov1, yolov2 와 비교 
+
+<img width="1116" alt="스크린샷 2021-01-06 오후 1 20 26" src="https://user-images.githubusercontent.com/68367329/103729658-46b14700-5024-11eb-9fbc-cdc65bb26614.png">
+
+
 #### feature extractor
 - yolov3 에 대해 새로운 feature extractor를 사용한다. 우리의 새로운 네트워크는 YOLOv2 구조 및 YOLOv2의 backbone 이었던 Darknet-19 와 residual network 로 구성되어있다. 연속적인 3 by 3, 1by 1 컨볼루션 레이어를 사용하며, shortcut connection을 사용해 상대적으로 커졌다. 총 53개의 컨볼루션 레이어로 구성된다.(Darknet-53)
 Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효과적이다.
