@@ -1,4 +1,4 @@
-# Yolo(You OnLy Look Once)
+# YOLO(You Only Look Once)
 
 
 
