@@ -1,40 +1,42 @@
 # You Only Look Once: Unified, Real-Time Object Detection
 ## 1. Introduction
-- 이미지를 흘끗 보고도 즉각적으로 이미지에 어떤 물체가 있고, 어디에 있고, 어떻게 상호작용 하는지 알 수 있다.
+- 인간은 이미지를 흘끗 보고도 즉각적으로 이미지에 어떤 물체가 있고, 어디에 있고, 어떻게 상호작용 하는지 알 수 있다.
 - 물체감지를 위한 빠르고 정확한 알고리즘은 컴퓨터가 특수 센서 없이도 자동차를 운전하도록 하고, 보조장치가 인간 사용자에게 실시간 장면정보를 전달할 수 있게 하며, 범용 반응로복 시스템의 가능성을 열어줄 것이다.
 - 지금의 많은 탐지 시스템들은 object detection을 위해 classifier를 용도 변경 하고 있다
 - DPM은 sliding window방식으로, R-CNN과 같은 최근의 접근들은 region proposal 방식으로 object detection을 수행하고자 하지만 이렇게 복합적인 파이프라인은 느리고 최적화도 어렵다.
 
 > ```"We reframe object detection as a single regression problem, straight from image pixels to bounding box coordinates and class probabilities."```
-- YOLO는 object detection을 이미지 픽셀에서부터 바운딩박스의 조정, 클래스의확률까지 한 번에 하는 single 회귀 문제로 reframe한다
+- YOLO는 object detection을 이미지 픽셀에서부터 바운딩박스의 조정, 클래스의확률까지 한 번에 하는 single 회귀 문제로 reframe한다.
 - YOLO시스템에서 당신은 이미지에 어떤 물체가 있고 어디에 있는지 예측하기 위해 단 한번만 보면 된다.
 
 
 #### Benefits over traditional method of object detection
 - _**Benefit 1. YOLO is extremely fast**_
-  - Detection을 회귀문제로 보기 때문에 복잡한 파이프라인이 필요 없다
-  - 단순히 우리의 뉴럴 넷을 새로운 이미지에 적용하고 예측하는 것 뿐
-  - TitanX GPU에서 no batch로했을 때 기본 네트워크는 45프레임/sec의속도를 갖는다. Fast version은140 fps의속도이다
+  - Detection을 회귀문제로 보기 때문에 복잡한 파이프라인이 필요 없다.
+  - 단순히 우리의 뉴럴 넷을 새로운 이미지에 적용하고 예측하는 것 뿐이다.
+  - TitanX GPU에서 no batch로 했을 때 기본 네트워크는 45fps의 속도를 갖는다. Fast version은 140fps의 속도이다
   - 이 말은 즉, 스트리밍 비디오에서 실시간으로 작업이 가능함을 의미한다. 25 밀리세컨(0.025)보다 작은 지연만 있을 뿐이다
-  - 게다가 YOLO는 다른 실시간 시스템에 비해 2배 이상 높은 mAP를 갖는다
+  - 게다가 YOLO는 다른 실시간 시스템에 비해 2배 이상 높은 mAP를 갖는다.
  
 - _**Benefit 2. YOLO resons globally about the image when making predictions**_
-  - Sliding window나 region proposal 기반의 기술들과는 달리 YOLO는 training, test 동안 전체 이미지를 본다
-  - 그래서 물체의 모양뿐 아니라 클래스에 대한 맥락적 정보까지 표현한다
-  - 최고의 탐지 방법인 fast R-CNN 조차도 이미지 배경의 일부를 물체로 인식하는 실수를 하기도 한다. 왜냐하면 더 큰 맥락을 보지 못하기 때문이다.
-  - YOLO는 배경을 잘못인식하는 에러를 fast R-CNN의 반도 안되게 줄였다.
+  - Sliding window나 region proposal 기반의 기술들과는 달리 YOLO는 training, test 동안 전체 이미지를 본다.
+  - 그래서 물체의 모양뿐 아니라 클래스에 대한 맥락적 정보까지 표현한다.
+  - 최고의 탐지 방법인 Fast R-CNN 조차도 이미지 배경의 일부를 물체로 인식하는 실수를 하기도 한다. 왜냐하면 더 큰 맥락을 보지 못하기 때문이다.
+  - YOLO는 배경을 잘못인식하는 에러를 Fast R-CNN의 반도 안되게 줄였다.
  
 - _**Benefit 3. YOLO learns generalizable representations of objects**_
   - 자연스러운 이미지를 학습하고 예술작품을 가지고 테스트할 때 YOLO는 DPM이나 R-CNN을 큰 격차로 뛰어넘는 성과를 냈다.
   - YOLO는 일반화시키는 능력이 뛰어나서 새로운 도메인이나 예상치 못한 인풋에도 심각한 오류 없이 탐지를 수행하는 것으로 보인다.
   
-- YOLO는 최첨단의 detection system들에 비해서 정확도는 뒤떨어진다. 하지만 이미지에서 빠르게 물체를 찾아내고 특히 작은 물체의 위치를 정확히 표현한다.
+- YOLO는 최첨단의 detection system들에 비해서 정확도는 떨어진다. 이미지에서 빠르게 물체를 찾아낼 수 있지만 일부 물체, 특히 작은 물체의 위치를 정밀하게 찾지는 못한다.
 
 ## 2. Unified Detection
 > ``` "We unify the seperate compenents of object detection into a single neural network." ```
+
+> ``` "우리는 물체 감지의 개별 구성 요소를 단일 신경망 네트워크로 통합한다." ```
 - YOLO 네트워크는 각각의 바운딩 박스를 예측하기 위해 전체 이미지의 특징들을 이용한다.
-- 이미지에 대해서는 모든 클래스의 모든 바운딩 박스를 동시에 예측한다
-- YOLO의 네트워크가 이미지 전체와 이미지에 있는 모든 물체들에 대해 전역적으로 (globally) 판단하고 있음을 의미한다
+- 이미지에 대해서는 모든 클래스의 모든 바운딩 박스를 동시에 예측한다.
+- YOLO의 네트워크가 이미지 전체와 이미지에 있는 모든 물체들에 대해 전역적으로 (globally) 판단하고 있음을 의미한다.
 - YOLO는 높은 수준의 average precision을 유지하면서도 end-to-end training을 하고 실시간의 속도를 내도록 설계되었다.
 
 - *YOLO의 detection 방법*
@@ -43,8 +45,10 @@
   - 각각의 그리드 셀은 Bounding box 와 confidence score를 예측한다. 이 신뢰도 점수는 상자에 객체가 들어 있다는 확신과 상자의 예측이 얼마나 정확한지 나타낸다.
   - 우리는 confidence를 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
   
-  <img src="https://user-images.githubusercontent.com/67793544/103729377-a2c79b80-5023-11eb-8ce8-f31834d9bc10.png" width="30%" height="30%"> 
-  
+  -  <img src="https://user-images.githubusercontent.com/67793544/103729377-a2c79b80-5023-11eb-8ce8-f31834d9bc10.png" width="30%" height="30%"> 
+  ---
+  For evaluating YOLO on PASCAL VOC, we use S = 7, B = 2. PASCAL VOC has 20 labelled classes so C = 20. Our final prediction is a 7 × 7 × 30 tensor.
+  ---
   - 만약 셀 안에 어떤 물체도 존재하지 않는다면 confidence score는 0이 되어야 한다
   - 그렇지 않으면 신뢰 점수가 예측 상자와 실측값 사이의 IOU와 같아야 한다.
   
@@ -95,8 +99,7 @@
   - 30 : 5/ 5/ 20으로 구분
     - 5: 그리드 셀의 첫 번째 바운딩박스의 좌표 (x, y, w, h, c) _c는 해당 바운딩박스에 물체가 있을 확률 
     - 5: 그리드 셀의 두 번째 바운딩박스의 좌표 (x, y, w, h, c) _c는 해당 바운딩박스에 물체가 있을 확률
-    - 20: class의 수_ YOLO에서 사용하는 클래스가 20개인 것이 아님 (이미지넷은 1000개의 class를 가짐)
-      - 여기서의 클래스의 수 20은 바운딩 박스 안의 물체가 속할 클래스의 가능성을 상위 20개만 표시한 것
+    - 20: class의 수_ PASCAL VOC dataset을 사용해서 평가했는데, 해당 데이터 셋의 클래스가 20개여서 20개의 각 클래스에 속할 확률
       - 20개의 각 클래스별 확률은 첫 번째, 두 번째 바운딩박스 좌표의 c(물체가 해당 박스에 있을 확률)와 각각 곱해져서 최종적으로 20개의 class score를 만듦 
 
 **predict tensor 구성: 1,2 번째 바운딩박스의 좌표구성**     
