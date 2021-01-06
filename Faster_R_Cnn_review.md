@@ -48,6 +48,14 @@
 여기서, i는 미니 배치에 있는 앵커의 지수이고 pi는 앵커 i가 물체가 될 것으로 예측되는 확률이다. 지면-진실 라벨 p*i는 앵커가 양이면 1이고, 앵커가 음이면 0이다.ti는 예측 경계 상자의 4개의 매개 변수화된 좌표를 나타내는 벡터이며, t*i는 포지티브 앵커와 관련된 지면 진실 상자의 좌표이다. 분류 손실 Lcls는 두 클래스에 대한 로그 손실입니다(개체 대 개체가 아님). 회귀 손실의 경우, 우리는 Lreg(ti, t²i) = R(ti - t²i)을 사용한다. 여기서 R은 Fast R-CNN에 정의된 강력한 손실 함수(α L1)이다. pøi Lreg라는 용어는 양성 앵커에 대해서만 회귀 손실이 활성화되고(pøi = 1) 그렇지 않으면 비활성화된다는 것을 의미합니다(pøi 0 0). 클래스 및 규칙 계층의 출력은 각각 {pi} 및 {ti}(으)로 구성됩니다.
 
 
-# Implementation Details
+# Sharing Convolutional Features for Region Proposal and Object Detection
+- ImageNet 데이터로 미리 학습된 CNN M0를 준비합니다.
+
+- M0 conv feature map을 기반으로 RPN M1를 학습합니다.
+- RPN M1을 사용하여 이미지들로부터 region proposal P1을 추출합니다.
+- 추출된 region proposal P1을 사용해 M0를 기반으로 Fast R-CNN을 학습하여 모델 M2를 얻습니다.
+- Fast R-CNN 모델 M2의 conv feature를 모두 고정시킨 상태에서 RPN을 학습해 RPN 모델 M3을 얻습니다.
+- RPN 모델 M3을 사용하여 이미지들로부터 region proposal P2을 추출합니다.
+- RPN 모델 M3의 conv feature를 고정시킨 상태에서 Fast R-CNN 모델 M4를 학습합니다.
 <img src="https://bloglunit.files.wordpress.com/2017/06/20170525-research-seminar-google-slides-2017-06-01-19-53-03.png" width="20%" height="55%" alt="process">
-- Faster R-CNN 논문에는 기술되어 있지 않지만, Alternating optimization의 복잡한 학습방법 대신, RPN의 loss function과 Fast R-CNN의 loss function을 모두 합쳐 multi-task loss로 둔 뒤, 한 번에 학습을 진행해도 Alternating optimization 방법과 거의 동일하거나 높은 성능이 나올 수 있음을 실험적으로 증명하였습니다. 이를 통해 단 한번의 학습과정으로 더욱 빠르게 Faster R-CNN 구조를 학습할 수 있습니다.
+- 앞서 말씀드린 Faster R-CNN 논문에는 기술되어 있지 않지만, 위 Alternating optimization의 복잡한 학습방법 대신, RPN의 loss function과 Fast R-CNN의 loss function을 모두 합쳐 multi-task loss로 둔 뒤, 한 번에 학습을 진행해도 Alternating optimization 방법과 거의 동일하거나 높은 성능이 나올 수 있음을 실험적으로 증명하였습니다. 이를 통해 단 한번의 학습과정으로 더욱 빠르게 Faster R-CNN 구조를 학습할 수 있습니다.
