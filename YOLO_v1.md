@@ -202,10 +202,7 @@
 - classifier, localizer 들과의 비교
 - 아래 표는 논문의 내용을 정리한 표
 
-|구분|DPM|R-CNN|Deep-multibox|Overfeat|MultiGrasp|
-|:---:|:-----|:-----|:-----|:-----|:-----|
-|특징|-sliding window 접근<br>-파이프라인적접근|-sliding window 대신 region proposal 사용<br>-파이프라인적 접근<br>-느린속도<br>-2000개의 바운딩박스제안|- region of interest를 찾는데 Selective search가 아닌 CNN을 사용<br>-컨피던스 예측치를 단일 클래스 예측치로 대체함으로써 단일물체 탐지 수행가능<br>-일반 물체 디텍션은 불가<br>-파이프라인적 접근, 추가적인 이미지 분류 필요|-Localization과 디텍션을 수행하기 위해 CNN 학습<br>-sliding window detection을 효율적으로 수행<br>-파이프라인적 접근(분리된시스템)<br>-위치정보를 최적화하지만 detection을 수행하지는 않음<br>-Overfeat은 전역적인 맥락을 보지 못하여 중대한 후작업을 요구함|-바운딩 박스 예측을 위한 Grid기반의 접근은 MultiGrasp의 grasps에 대한 회귀에 근간<br>-grasp의 탐지는 물체 탐지보다 훨씬 간단<br>- MultiGrasp는 단지 물체를 포함하고 있는 이미지에 대해 graspable한 단일 지역을 예측<br>-사이즈나 위치를 추정하거나 물체를 경계짓고 클래스를 예측하지 않아도 됨
-|YOLO|-이질적인 부분을 단일 CNN으로 대체하여 특징 추출, 바운딩박스 예측, NPS, 맥락적 지역설정 동시 수행|-잠정적 바운딩박스 제안, conv layer를 이용한 scoring 유사<br>-공간적제약을 강화해 동일 물체에 대한 중복 탐지를 완화<br>-단 98개의 바운딩박스 제안|- 바운딩 박스의 예측을 위해 CNN을 사용하지만 YOLO는 완전한 디텍션 시스템|-단일시스템<br>-전역적 맥락에서 이미지를 파악|-YOLO는 작업의 설계에 있어서 MultiGrasp와 유사<br>-YOLO는 이미지에 있는 다양한 클래스의 많은 물체들에 대해 바운딩 박스와 class가능성을 모두 예측|
+![image](https://user-images.githubusercontent.com/67793544/103736758-330ddc80-5034-11eb-8048-80598bd0ba6d.png)
 
 - DPM (Deformable Parts Models)
   - sliding window 접근법을 사용한다.
