@@ -1,15 +1,13 @@
 # YOLO(You Only Look Once)!
 [발표자료 다운로드(pdf)](https://github.com/dss-14th/deeplearning-repo-2/files/5764532/YOLO.You.only.look.once.pdf)
 
-### 1. 이미지 디텍션
+### 1. Image detection with Yolov5 
 
 #### (1) dataset
-- CCTV dataset
-- Blackpink dataset
-
 #### (2) Image labeling
-#### (3) YOLO installation
-#### (4) Detection
+#### (3) Augmentation
+#### (4) YOLO installation
+#### (5) Detection
 
 
 
