@@ -54,4 +54,6 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 - focal loss 를 사용하려 했으나 mAP 를 2점 떨어뜨렸다. 아마 YOLOv3가 자체 objectness 점수와 조건부 클래스 예측을 가지고 있어  focal loss 가 풀고자 하는 문제에 이미 대응할 수 있기 때문일 것이다.
 
 4. Dual IOU thresholds and truth assignment
-- 
+- Faster RCNN 은 트레이닝 단계에서 2개의 IOU threshold(0.3, 0.7)를 사용한다. 바운딩박스와 ground truth box 의 IOU 값이 0.7 이상인 경우 positive example, 0.3-0.7 사이의 경우 무시, 0.3 이하일 경우 negative example 로 간주한다. 이러한 방식을 YOLOv3 에 적용하고자 했지만 좋은 결과를 가져오지 못했다.
+
+
