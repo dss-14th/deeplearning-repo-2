@@ -41,7 +41,10 @@
   - 이미지를  S x S grid로 나눈다
   - 물체의 중심이 grid cell안에 속한다면 해당 그리드 셀은 그 물체를 탐지할 책임을 갖는다.
   - 각각의 그리드 셀은 Bounding box 와 confidence score를 예측한다. 이 신뢰도 점수는 상자에 객체가 들어 있다는 확신과 상자의 예측이 얼마나 정확한지 나타낸다.
-  - 우리는 confidence를 Pr(Object) ∗ IOU <sup>truth</sup><sub>pred</sub> 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
+  - 우리는 confidence를 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
+  
+  <img src="https://user-images.githubusercontent.com/67793544/103729377-a2c79b80-5023-11eb-8ce8-f31834d9bc10.png" width="30%" height="30%"> 
+  
   - 만약 셀 안에 어떤 물체도 존재하지 않는다면 confidence score는 0이 되어야 한다
   - 그렇지 않으면 신뢰 점수가 예측 상자와 실측값 사이의 IOU와 같아야 한다.
   
