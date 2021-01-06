@@ -3,8 +3,13 @@
 
 ### 1. 이미지 디텍션
 
+#### (1) dataset
 - CCTV dataset
 - Blackpink dataset
+
+#### (2) Image labeling
+#### (3) YOLO installation
+#### (4) Detection
 
 
 
