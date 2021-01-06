@@ -1,4 +1,4 @@
-# You Only Look Once: Unified, Real-Time Object Detection
+# [You Only Look Once: Unified, Real-Time Object Detection](https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf)
 ## 1. Introduction
 - 인간은 이미지를 흘끗 보고도 즉각적으로 이미지에 어떤 물체가 있고, 어디에 있고, 어떻게 상호작용 하는지 알 수 있다.
 - 물체감지를 위한 빠르고 정확한 알고리즘은 컴퓨터가 특수 센서 없이도 자동차를 운전하도록 하고, 보조장치가 인간 사용자에게 실시간 장면정보를 전달할 수 있게 하며, 범용 반응로복 시스템의 가능성을 열어줄 것이다.
