@@ -63,4 +63,4 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 YOLOv3 와 다른 모델들에 대해 COCO 데이터셋의 mAP metric 을 비교해보았을 때, SSD 기준 3배가 빠르며, RetinaNet 보다는 조금 느리다. 그러나 AP50 을 비교해보았을 때, RetinaNet 과
 비슷한 성능을 보인다.
 
-<p align="center"><img width="606" alt="스크린샷 2021-01-06 오후 3 22 40" src="https://user-images.githubusercontent.com/68367329/103736172-1329e900-5033-11eb-8172-81a5063b896c.png"></p>
+<p align ='center'><img width="605" alt="스크린샷 2021-01-06 오후 3 58 31" src="https://user-images.githubusercontent.com/68367329/103738864-107dc280-5038-11eb-9b02-4f84879b07ed.png"></p>
