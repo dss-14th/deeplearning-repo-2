@@ -41,9 +41,17 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 
 맥스 풀링 단점 : 특성 맵 자체가 작아지면서 정보가 소실되어 이미지의 해상도가 낮아진다. 1 by 1 convolutional layer 의 경우 특성맵의 크기는 유지한 채, 필터의 갯수를 적게 사용해 이전 레이어보다 차원을 줄인다.이를 통해 특성 맵의 이미지 정보를 압축시킨다.
 
-<img width="714" alt="스크린샷 2021-01-06 오후 1 31 50" src="https://user-images.githubusercontent.com/68367329/103729434-c68ae180-5023-11eb-8dce-dde26f82d8b9.png">
+#### Things We Tried That Didn't Work
 
-- [출처](https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215)
+아래 방법은 Yolov3 를 개발하는 동안 시도했던 시행착오들이다. 
 
+1. Anchor box x, y offset predictions 
+- 처음엔 linear activation function을 활용해 width와 height 의 곱으로 x,y offset을 예측하는 일반적인 앵커박스 예측 매커니즘을 따르려고 했다. 그러나 이 방식이 모델의 안정성을 떨어트리고, 성능도 떨어트린다는 것을 알게 되었다.
+2. Linear x,y predictions instead of logistic
+- logistic activation 대신 linear activation 을 사용해 바로 x,y offset 을 예측하려 했으나 mAP 가 2점 하락하는 결과를 가져왔다.
 
-#### 
+3. Focal loss 
+- focal loss 를 사용하려 했으나 mAP 를 2점 떨어뜨렸다. 아마 YOLOv3가 자체 objectness 점수와 조건부 클래스 예측을 가지고 있어  focal loss 가 풀고자 하는 문제에 이미 대응할 수 있기 때문일 것이다.
+
+4. Dual IOU thresholds and truth assignment
+- 
