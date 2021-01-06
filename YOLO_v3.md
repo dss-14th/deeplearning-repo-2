@@ -27,11 +27,11 @@
 
 52*52, 26*26, 13*13 feature map을 각각 f_52, f_26, f_13 이라고 했을 시, f_26 은 *2 업샘플링, f_13은 *4 업샘플링을 통해 f_52의 정보와 합친다. 이 방법을 통해 초기 특징맵에서 (f_52, f_26) 더 정교하고 의미있는 정보를 얻을 수 있다. 이를 통해 비슷한 tensor 로 예측할 수 있게 되었다. 
 
-또한 미리 바운딩 박스의 갯수를 결정하기 위해 k-means clustering을 사용해 앵커박스의 갯수를 지정했다. 3개의 피처맵당 3개의 클러스터를 사용했다.(3*3=9개의 anchor box)
+또한 미리 바운딩 박스의 갯수를 결정하기 위해 k-means dimension clustering을 사용해 총 9개의 앵커박스의 갯수를 지정했다. 3개의 피처맵당 3개의 앵커박스가 사용된다.(3*3=9개의 anchor box)
 
 #### 4. yolov1, yolov2 와 비교 
 
-<img width="1116" alt="스크린샷 2021-01-06 오후 1 20 26" src="https://user-images.githubusercontent.com/68367329/103729658-46b14700-5024-11eb-9fbc-cdc65bb26614.png">
+<img width="976" alt="스크린샷 2021-01-06 오후 1 20 26" src="https://user-images.githubusercontent.com/68367329/103729658-46b14700-5024-11eb-9fbc-cdc65bb26614.png">
 
 
 #### 5. feature extractor
@@ -60,5 +60,7 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
   - Faster RCNN 은 트레이닝 단계에서 2개의 IOU threshold(0.3, 0.7)를 사용한다. 바운딩박스와 ground truth box 의 IOU 값이 0.7 이상인 경우 positive example, 0.3-0.7 사이의 경우 무시, 0.3 이하일 경우 negative example 로 간주한다. 이러한 방식을 YOLOv3 에 적용하고자 했지만 좋은 결과를 가져오지 못했다.
 
 #### 7. result
+YOLOv3 와 다른 모델들에 대해 COCO 데이터셋의 mAP metric 을 비교해보았을 때, SSD 기준 3배가 빠르며, RetinaNet 보다는 조금 느리다. 그러나 AP50 을 비교해보았을 때, RetinaNet 과
+비슷한 성능을 보인다.
 
 <p align="center"><img width="606" alt="스크린샷 2021-01-06 오후 3 22 40" src="https://user-images.githubusercontent.com/68367329/103736172-1329e900-5033-11eb-8172-81a5063b896c.png"></p>
