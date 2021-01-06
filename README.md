@@ -6,7 +6,6 @@
 - [YOLOv2]()
 - [YOLOv3]()
 
-- YOLOv3 를 Pytorch 로 구현하는 코드는 아래 깃헙의 코드를 참고했습니다.
-[repo](https://github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch)
+- YOLOv3 를 Pytorch 로 구현하는 코드는 [Github Repo](https://github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch)의 코드를 참고했습니다.
 
 
