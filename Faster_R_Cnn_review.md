@@ -1,6 +1,6 @@
 # 논문  
 [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf)
-
+[참고](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
 
 # 요약
 - 기존 Fast R-CNN 속도의 bottleneck이었던 region proposal 생성을 CNN 외부의 알고리즘이 아닌, CNN 내부에 region proposal을 생성할 수 있는 network를 설계함으로써 더욱 빠르면서도 정확한 region proposal을 생성할 수 있습니다. Faster R-CNN은 기존의 Fast R-CNN에 Region proposal network을 추가한 것이 핵심이라고 볼 수 있습니다.
@@ -16,7 +16,7 @@
 - 하나는 각 conv feature map을 짧은(256-d) feature vector 로 인코딩 하는 것이고, 다른 하나는 각 conv map position에서  다양한 스케일과 비율에 상대적인 k region proposal로써 objectness score와 regressed bound를 출력하는 것입니다.
 - Faster R-CNN은 기존의 Fast R-CNN에 Region proposal network을 추가한 것이 핵심이라고 볼 수 있습니다.
 
-<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-16-18-49.png" width="20%" height="55%" alt="process">
+<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-16-18-49.png" width="40%" height="75%" alt="process">
 
 # RPN
 - RPN 은 모든크기의 이미지를 input으로 가져와 objectness score가 들어있는 직사각형에 객체로 출력합니다. 
@@ -26,7 +26,7 @@
 - 이 벡터는 두 개의 FCN 이고, layer(reg)와 layer(cls) 입니다.
 - 다시말해 RPN은 n × n 컨볼루션에 이어서 두 개의 1 × 1 컨볼루션으로 구현됩니다. 하지만, 이처럼 단순하게 RPN을 설계할 경우 문제가 발생할 수 있습니다. 
 
-<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-20-01-41.png" width="20%" height="55%" alt="process">
+<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-20-01-41.png" width="40%" height="75%" alt="process">
 
 
 
@@ -36,7 +36,7 @@
 
 - 이미지에 존재하는 물체들의 크기와 비율이 다양하기 때문에 고정된 N x N 크기의 입력만으로 다양한 크기와 비율을 수용하기에는 부족함이 있습니다. 이러한 단점을 보완하기 위해 미리 정의된 여러 크기와 비율의 reference box k를 정해놓고 각각의 sliding-window 위치마다 k개의 box를 출력하도록 설계하고 이러한 방식을 anchor라고 명칭하였습니다. 즉 RPN의 출력값은, 모든 anchor 위치에 대해 각각 물체/배경을 판단하는 2k개의 classification 출력과, x,y,w,h 위치 보정값을 위한 4k개의 regression 출력을 지니게 됩니다. Feature map의 크기가 W x H라면 하나의 feature map에 총 W x H x k 개의 anchor가 존재하게 됩니다. 논문에서는 3가지의 크기(128, 256, 512)와 3가지의 비율(2:1, 1:1, 1:2)을 사용해 총 anchor k=9를 최종적으로 사용하였습니다.
 
-<img src="https://bloglunit.files.wordpress.com/2017/06/1506-01497-pdf-2017-06-01-19-30-11.png" width="20%" height="55%" alt="process">
+<img src="https://bloglunit.files.wordpress.com/2017/06/1506-01497-pdf-2017-06-01-19-30-11.png" width="40%" height="75%" alt="process">
 
 <img src="https://user-images.githubusercontent.com/66449614/103753540-80974300-504e-11eb-92f1-71738b3cf581.png">
 
@@ -57,5 +57,5 @@
 - Fast R-CNN 모델 M2의 conv feature를 모두 고정시킨 상태에서 RPN을 학습해 RPN 모델 M3을 얻습니다.
 - RPN 모델 M3을 사용하여 이미지들로부터 region proposal P2을 추출합니다.
 - RPN 모델 M3의 conv feature를 고정시킨 상태에서 Fast R-CNN 모델 M4를 학습합니다.
-<img src="https://bloglunit.files.wordpress.com/2017/06/20170525-research-seminar-google-slides-2017-06-01-19-53-03.png" width="20%" height="55%" alt="process">
+<img src="https://bloglunit.files.wordpress.com/2017/06/20170525-research-seminar-google-slides-2017-06-01-19-53-03.png" width="40%" height="75%" alt="process">
 - 앞서 말씀드린 Faster R-CNN 논문에는 기술되어 있지 않지만, 위 Alternating optimization의 복잡한 학습방법 대신, RPN의 loss function과 Fast R-CNN의 loss function을 모두 합쳐 multi-task loss로 둔 뒤, 한 번에 학습을 진행해도 Alternating optimization 방법과 거의 동일하거나 높은 성능이 나올 수 있음을 실험적으로 증명하였습니다. 이를 통해 단 한번의 학습과정으로 더욱 빠르게 Faster R-CNN 구조를 학습할 수 있습니다.
