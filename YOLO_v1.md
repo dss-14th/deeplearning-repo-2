@@ -46,11 +46,10 @@
   - 우리는 confidence를 물체가 있을 확률과 실제와 예측값의 IOU를곱해서 정의한다
   
   -  <img src="https://user-images.githubusercontent.com/67793544/103729377-a2c79b80-5023-11eb-8ce8-f31834d9bc10.png" width="30%" height="30%"> 
-  ---
-  For evaluating YOLO on PASCAL VOC, we use S = 7, B = 2. PASCAL VOC has 20 labelled classes so C = 20. Our final prediction is a 7 × 7 × 30 tensor.
-  ---
+ 
   - 만약 셀 안에 어떤 물체도 존재하지 않는다면 confidence score는 0이 되어야 한다
   - 그렇지 않으면 신뢰 점수가 예측 상자와 실측값 사이의 IOU와 같아야 한다.
+  - For evaluating YOLO on PASCAL VOC, we use S = 7, B = 2. PASCAL VOC has 20 labelled classes so C = 20. Our final prediction is a 7 × 7 × 30 tensor.
   
 <Blockquote>
   
