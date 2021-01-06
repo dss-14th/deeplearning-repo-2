@@ -6,7 +6,7 @@
 - yolov3 는 yolo9000과 같이 차원 클러스터링을 통해 앵커 박스로부터 바운딩 박스를 예측한다. 욜로 네트워크는 각 바운딩 박스로부터 4개의 좌표를 예측하고(tx, ty, tw, th), 각 그리드셀의 왼쪽 상단 지점을 기준으로 셀 내부의 위치를 예측해 최종 바운딩 박스 정보를 결정한다.(bx,by, bw, bh)
 
 
-<p align="center"><img width="447" alt="스크린샷 2021-01-06 오후 1 03 47" src="https://user-images.githubusercontent.com/68367329/103729548-05209c00-5024-11eb-92bb-9f5a1da998fd.png"></p>
+<p align="center"><img width="487" alt="스크린샷 2021-01-06 오후 1 03 47" src="https://user-images.githubusercontent.com/68367329/103729548-05209c00-5024-11eb-92bb-9f5a1da998fd.png"></p>
 
 - yolov3 는 이진 분류를 통해 objectness score (바운딩 박스에 물체가 있는지 없는지에 대한 확률점수) 를 예측한다. ground truth box(정답으로 라벨링된 박스)와 IOU 가 가장 높은 바운딩 박스의 objectness score 는 1이 되어야 한다. 이 바운딩 박스를 제외한 objectness 가 threshold 값인 0.5를 넘는 값을 가진 바운딩 박스들은 모두 무시한다. 이전 yolo 버전과 다르게, 하나의 ground truth box 에 대해 하나의 바운딩 박스를 할당한다. ground truth box 에 할당되지 않은 바운딩 박스들은 좌표나 분류 예측예 대한 손실값을 반영하지 않는다. 
 
@@ -17,11 +17,11 @@
 #### 3. predictions across scales
 - yolov3 는 3개의 다른 scale 에서 앵커박스들을 생성하고, 바운딩 박스를 예측한다. 
 
-<img width="1342" alt="스크린샷 2021-01-06 오후 1 18 52" src="https://user-images.githubusercontent.com/68367329/103729815-9c85ef00-5024-11eb-9796-0822e9d50e6d.png">
+<p align='center'><img width="1342" alt="스크린샷 2021-01-06 오후 1 18 52" src="https://user-images.githubusercontent.com/68367329/103729815-9c85ef00-5024-11eb-9796-0822e9d50e6d.png"></p>
 
 코코데이터셋에서의 각 피처맵당 생성되는 정보는 다음 수식으로 계산될 수 있다.
 
-  - N * N * [3*(4+1+80)]
+<p align='center'><img width="198" alt="스크린샷 2021-01-06 오후 3 42 17" src="https://user-images.githubusercontent.com/68367329/103737581-ce538180-5035-11eb-8512-e17617b29c36.png"></p>
 
   - N : 각 scale 당 그리드셀 크기(13,26,52), 4개의 바운딩박스 좌표, 1개 objectness , 80개의 클래스 예측
 
