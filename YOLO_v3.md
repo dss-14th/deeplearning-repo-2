@@ -49,14 +49,14 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 아래 방법은 Yolov3 를 개발하는 동안 시도했던 시행착오들이다. 
 
 - Anchor box x, y offset predictions 
-처음엔 linear activation function을 활용해 width와 height 의 곱으로 x,y offset을 예측하는 일반적인 앵커박스 예측 매커니즘을 따르려고 했다. 그러나 이 방식이 모델의 안정성을 떨어트리고, 성능도 떨어트린다는 것을 알게 되었다.
+  - 처음엔 linear activation function을 활용해 width와 height 의 곱으로 x,y offset을 예측하는 일반적인 앵커박스 예측 매커니즘을 따르려고 했다. 그러나 이 방식이 모델의 안정성을 떨어트리고, 성능도 떨어트린다는 것을 알게 되었다.
 - Linear x,y predictions instead of logistic
-logistic activation 대신 linear activation 을 사용해 바로 x,y offset 을 예측하려 했으나 mAP 가 2점 하락하는 결과를 가져왔다.
+  - logistic activation 대신 linear activation 을 사용해 바로 x,y offset 을 예측하려 했으나 mAP 가 2점 하락하는 결과를 가져왔다.
 
 - Focal loss 
-focal loss 를 사용하려 했으나 mAP 를 2점 떨어뜨렸다. 아마 YOLOv3가 자체 objectness 점수와 조건부 클래스 예측을 가지고 있어  focal loss 가 풀고자 하는 문제에 이미 대응할 수 있기 때문일 것이다.
+  - focal loss 를 사용하려 했으나 mAP 를 2점 떨어뜨렸다. 아마 YOLOv3가 자체 objectness 점수와 조건부 클래스 예측을 가지고 있어  focal loss 가 풀고자 하는 문제에 이미 대응할 수 있기 때문일 것이다.
 
 - Dual IOU thresholds and truth assignment
-Faster RCNN 은 트레이닝 단계에서 2개의 IOU threshold(0.3, 0.7)를 사용한다. 바운딩박스와 ground truth box 의 IOU 값이 0.7 이상인 경우 positive example, 0.3-0.7 사이의 경우 무시, 0.3 이하일 경우 negative example 로 간주한다. 이러한 방식을 YOLOv3 에 적용하고자 했지만 좋은 결과를 가져오지 못했다.
+  - Faster RCNN 은 트레이닝 단계에서 2개의 IOU threshold(0.3, 0.7)를 사용한다. 바운딩박스와 ground truth box 의 IOU 값이 0.7 이상인 경우 positive example, 0.3-0.7 사이의 경우 무시, 0.3 이하일 경우 negative example 로 간주한다. 이러한 방식을 YOLOv3 에 적용하고자 했지만 좋은 결과를 가져오지 못했다.
 
 
