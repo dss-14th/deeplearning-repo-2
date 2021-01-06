@@ -10,7 +10,7 @@
 - yolov3 는 이진 분류를 통해 objectness score (바운딩 박스에 물체가 있는지 없는지에 대한 확률점수) 를 예측한다. ground truth box(정답으로 라벨링된 박스)와 IOU 가 가장 높은 바운딩 박스의 objectness score 는 1이 되어야 한다. 이 바운딩 박스를 제외한 objectness 가 threshold 값인 0.5를 넘는 값을 가진 바운딩 박스들은 모두 무시한다. 이전 yolo 버전과 다르게, 하나의 ground truth box 에 대해 하나의 바운딩 박스를 할당한다. ground truth box 에 할당되지 않은 바운딩 박스들은 좌표나 분류 예측예 대한 손실값을 반영하지 않는다. 
 
 ####  class prediction
-- yolov2 의 경우, 클래스 분류시 소프트맥스를 사용해 하나의 대상에 대해 하나의 클래스만 대응되어, 멀티 라벨이 불가능하다는 문제가 있었다. yolov3 는 이를 해결하기 위해 시그모이드를 사용해 이진분류 문제로 바꾸면서 멀티라벨을 가능하게 했다. (ex) 여자, 사람)
+- yolov2 의 경우, 클래스 분류시 소프트맥스를 사용해 하나의 대상에 대해 하나의 클래스만 대응되어, 멀티 라벨이 불가능하다는 문제가 있었다. yolov3 는 이를 해결하기 위해 시그모이드를 사용해 binary cross-entropy loss를 사용하면서 멀티라벨을 가능하게 했다. (ex) 여자, 사람)
 
 
 #### predictions across scales
@@ -46,3 +46,4 @@ Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효�
 - [출처](https://towardsdatascience.com/a-comprehensive-introduction-to-different-types-of-convolutions-in-deep-learning-669281e58215)
 
 
+#### 
