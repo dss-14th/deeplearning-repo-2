@@ -7,17 +7,23 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 후반에 detection 층�
 
 - convolutional layers
 <img width="873" alt="스크린샷 2021-01-07 오후 5 39 34" src="https://user-images.githubusercontent.com/68367329/103871726-c6b4db00-5110-11eb-8727-ceec158b0a20.png">
+
 - shortcut layers
+  - skip connection 정보를 저장한다. 해당 레이어들간 정보 흐름을 담당한다.
 <img width="873" alt="스크린샷 2021-01-07 오후 5 42 51" src="https://user-images.githubusercontent.com/68367329/103871731-c87e9e80-5110-11eb-9237-c395bba29238.png">
 
 - rout layers
+  - detection 단계에서 필요한 레이어 정보를 저장한다. 
 <img width="873" alt="스크린샷 2021-01-07 오후 5 41 57" src="https://user-images.githubusercontent.com/68367329/103871739-c9afcb80-5110-11eb-80af-6b0e93a89bae.png">
 
 - upsample layers
+  - detection 단계에서 필요한 upsampling 연산 정보를 저장한다.
 <img width="873" alt="스크린샷 2021-01-07 오후 5 40 26" src="https://user-images.githubusercontent.com/68367329/103871734-c87e9e80-5110-11eb-922e-b56c68662d73.png">
 
 - detection layer
-detection layer 는 총 3 개의 레이어로 구성되며, mask 에 해당하는 인덱스의 anchor 정보를 가져와 해당 피쳐 맵의 앵커박스를 지정한다.
+  - YOLOv3 에선 총 3 개의 레이어를 사용한다. 
+  - mask에 해당하는 인덱스의 anchor 정보를 가져와 해당 피쳐 맵의 앵커박스를 지정한다. 
+  - 이를 통해 하나의 그리드셀당 3개의 앵커박스를 생성할 수 있게 한다.
 <img width="873" alt="스크린샷 2021-01-07 오후 5 42 17" src="https://user-images.githubusercontent.com/68367329/103871717-c4528100-5110-11eb-84a7-8079af698f56.png">
 <img width="873" alt="스크린샷 2021-01-07 오후 5 40 54" src="https://user-images.githubusercontent.com/68367329/103871736-c9173500-5110-11eb-87de-0317ffd0d217.png">
 <img width="873" alt="스크린샷 2021-01-07 오후 5 39 57" src="https://user-images.githubusercontent.com/68367329/103871728-c7e60800-5110-11eb-92a2-fe1f0e98d56e.png">
