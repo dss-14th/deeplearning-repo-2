@@ -15,7 +15,7 @@
 
 ### *⚙ Preprocessing & training*
 
-<img src = "https://user-images.githubusercontent.com/67793544/103855312-c3f8bc80-50f5-11eb-9769-af65e155ff59.png" width="80%" height="80%">
+<img src = "https://user-images.githubusercontent.com/67793544/103855312-c3f8bc80-50f5-11eb-9769-af65e155ff59.png">
 
 ### (1) CCTV dataset
 ---
@@ -51,7 +51,7 @@
   
 - **test 결과**
 
-  ![cctv_detection_result](https://user-images.githubusercontent.com/67793544/103859831-163ddb80-50fe-11eb-9481-9d527986275a.gif)
+<p align='center'><img src = 'https://user-images.githubusercontent.com/67793544/103859831-163ddb80-50fe-11eb-9481-9d527986275a.gif'></p>
 
 ### (2) BLACKPINK dataset
 ---
@@ -69,7 +69,7 @@
   - using YOLO mark
 - **test 결과**
 
-  ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/67793544/103860464-feb32280-50fe-11eb-9499-2cd7ca2ba086.gif)
+<p align='center'><img src='https://user-images.githubusercontent.com/67793544/103860464-feb32280-50fe-11eb-9499-2cd7ca2ba086.gif'> </p>
 
 ### 2. 참고 논문 리뷰
 - [FatRCNN]()
