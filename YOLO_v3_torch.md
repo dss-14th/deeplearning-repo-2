@@ -10,12 +10,13 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 후반에 detection 층�
 - (2) shortcut layers
 <img width="976" alt="스크린샷 2021-01-07 오후 5 42 51" src="https://user-images.githubusercontent.com/68367329/103871731-c87e9e80-5110-11eb-9237-c395bba29238.png">
 - (3) rout layers
-<img width="973" alt="스크린샷 2021-01-07 오후 5 40 54" src="https://user-images.githubusercontent.com/68367329/103871736-c9173500-5110-11eb-87de-0317ffd0d217.png">
-- (4) upsample layers
 <img width="976" alt="스크린샷 2021-01-07 오후 5 41 57" src="https://user-images.githubusercontent.com/68367329/103871739-c9afcb80-5110-11eb-80af-6b0e93a89bae.png">
+
+- (4) upsample layers
+
 - (5) detection layers
 <img width="973" alt="스크린샷 2021-01-07 오후 5 42 17" src="https://user-images.githubusercontent.com/68367329/103871717-c4528100-5110-11eb-84a7-8079af698f56.png">
-
+<img width="973" alt="스크린샷 2021-01-07 오후 5 40 54" src="https://user-images.githubusercontent.com/68367329/103871736-c9173500-5110-11eb-87de-0317ffd0d217.png">
 <img width="975" alt="스크린샷 2021-01-07 오후 5 39 57" src="https://user-images.githubusercontent.com/68367329/103871728-c7e60800-5110-11eb-92a2-fe1f0e98d56e.png">
 
 <img width="979" alt="스크린샷 2021-01-07 오후 5 40 26" src="https://user-images.githubusercontent.com/68367329/103871734-c87e9e80-5110-11eb-922e-b56c68662d73.png">
