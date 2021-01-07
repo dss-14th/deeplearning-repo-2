@@ -28,8 +28,27 @@
 - **augmentation**
   - augment each of the train images by 12 to create 108 train images.
   - validation images are not augmented.
-  <img src = 'https://user-images.githubusercontent.com/67793544/103857063-1be4f280-50f9-11eb-87d4-58965328a9b3.png' width = "50%" height="50%">
+  
+  ```
+  # augmentation filter
+  seq1 = iaa.Affine(scale={'x':(0.5, 1.5), 'y':(0.5, 1.5)}) # 늘리기
+  seq2 = iaa.Affine(translate_percent={'x': (-0.2, 0.2), 'y':(-0.2, 0.2)}) # 옆으로 밀기
+  seq3 = iaa.Affine(translate_px={"x": (-20, 20), "y": (-20, 20)}) # 위아래로 늘리기
+  seq4 = iaa.Affine(rotate=(-45, 45)) # 사진 45도 돌리기
+  seq5 = iaa.Affine(shear=(-16, 16)) # 대각선으로 늘리기
+  seq7= iaa.Sequential([
+                      iaa.Multiply((1.2, 1.5)), 
+                      iaa.Fliplr(1.0) 
+                      ]) # 밝기 변화 + 좌우반전
+  seq8 = iaa.Grayscale(alpha=1.0) # 회색
+  seq9 = iaa.Sequential([iaa.Dropout((0.05, 0.1), per_channel=0.5),
+                      iaa.Multiply((0.3, 1.5)),
+                      iaa.ChannelShuffle(p=1.0)]) # dropout, 픽셀 조정
+  seq10 = iaa.GaussianBlur(sigma=1.5) # 흐리게
+  seq11 = iaa.Rot90(1) # 90도 회전
 
+  ```
+  
 - **test 결과**
 
   ![cctv_detection_result](https://user-images.githubusercontent.com/67793544/103859831-163ddb80-50fe-11eb-9481-9d527986275a.gif)
