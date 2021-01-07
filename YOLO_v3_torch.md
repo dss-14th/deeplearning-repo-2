@@ -3,14 +3,14 @@ Pytorch 로 YOLOv3 를 구현해 직접 만든 데이터셋을 활용해 이미�
 이 [깃헙](https://github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch)을 바탕으로 파이썬 모듈을 생성했다. 그 과정에서 중요하다고 생각하는 개념 및 코드를 공유하고자 한다. 
 
 #### 1.Layers
-YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 후반에 detection 층을 추가해 feature extraction 및 detection 을 진행한다. 총 5 종류의 레이어로 구성되며, 반복 사용되어 YOLO 를 구성한다. feature extraction 을 위한 convolutional layers 와 skip connection 을 담당하는 shortcut layers, detection 단계에서 필요한 연산을 수행하는 층인 upsample 과 route 층이 필요하다. 마지막으로 3 종류의 피쳐 맵에 해당하는 3개의 앵커박스 정보를 포함하는 detection 층으로 구성된다.
+YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 ResNet에서 사용하는 skip connection 을 사용한다. 또한 마지막에 detection 층을 추가했다. 아래 총 5 종류의 레이어로 구성되어 있다.
 
 - convolutional layers
-<img width="873" alt="스크린샷 2021-01-07 오후 5 39 34" src="https://user-images.githubusercontent.com/68367329/103871726-c6b4db00-5110-11eb-8727-ceec158b0a20.png">
+  <img width="873" alt="스크린샷 2021-01-07 오후 5 39 34" src="https://user-images.githubusercontent.com/68367329/103871726-c6b4db00-5110-11eb-8727-ceec158b0a20.png">
 
 - shortcut layers
   - skip connection 정보를 저장한다. 해당 레이어들간 정보 흐름을 담당한다.
-    <img width="873" alt="스크린샷 2021-01-07 오후 5 42 51" src="https://user-images.githubusercontent.com/68367329/103871731-c87e9e80-5110-11eb-9237-c395bba29238.png">
+  <img width="873" alt="스크린샷 2021-01-07 오후 5 42 51" src="https://user-images.githubusercontent.com/68367329/103871731-c87e9e80-5110-11eb-9237-c395bba29238.png">
 
 - rout layers
   - detection 단계에서 필요한 레이어 정보를 저장한다. 
