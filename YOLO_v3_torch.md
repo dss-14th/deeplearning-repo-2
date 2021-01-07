@@ -8,8 +8,11 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 후반에 detection 층�
 - (1) convolutional layers
 - (2) shortcut layers
 - (3) rout layers
+<img width="860" alt="스크린샷 2021-01-07 오후 5 22 29" src="https://user-images.githubusercontent.com/68367329/103869418-9c155300-510d-11eb-9713-932abb597694.png">
 - (4) upsample layers
+<img width="864" alt="스크린샷 2021-01-07 오후 5 22 43" src="https://user-images.githubusercontent.com/68367329/103869413-9ae42600-510d-11eb-9dc0-2dbb1bc8a680.png">
 - (5) detection layers
+<img width="859" alt="스크린샷 2021-01-07 오후 5 22 08" src="https://user-images.githubusercontent.com/68367329/103869424-9d468000-510d-11eb-8312-446bceb132aa.png">
 
 #### 2. forward
 
