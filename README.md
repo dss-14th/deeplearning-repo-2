@@ -26,7 +26,7 @@
   <img src = 'https://user-images.githubusercontent.com/67793544/103856830-a9741280-50f8-11eb-9104-3c0c005b4139.png' width = "50%" height="50%">
 
 - **augmentation**
-  - augment each of the train images by 12 to create 108 train images.
+  - augment each of the train images by 11 to create 99 train images.
   - validation images are not augmented.
   
   ```
@@ -46,7 +46,6 @@
                       iaa.ChannelShuffle(p=1.0)]) # dropout, 픽셀 조정
   seq10 = iaa.GaussianBlur(sigma=1.5) # 흐리게
   seq11 = iaa.Rot90(1) # 90도 회전
-
   ```
   
 - **test 결과**
