@@ -70,6 +70,7 @@
 - **test 결과**
 
 <p align='center'><img src='https://user-images.githubusercontent.com/67793544/103860464-feb32280-50fe-11eb-9499-2cd7ca2ba086.gif'> </p>
+
 ---
 ### 2. 참고 논문 리뷰
 #### (1) [Faster R-CNN](https://github.com/dss-14th/deeplearning-repo-2/blob/main/Faster_R_Cnn_review.md)
