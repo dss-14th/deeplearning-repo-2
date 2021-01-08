@@ -47,5 +47,11 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 ResNet에서 사용하는
 - 52 by 52 feature map 의 경우 (0,0), ... (51,51) 의 offset 행렬을 생성한다. 
 - 이후 그리드 상에서 바운딩 박스의 좌표(0~1사이 값)를 offset에 더해주며 최종 바운딩 박스의 좌표 정보를 구한다. 
   <img width="873" alt="스크린샷 2021-01-08 오후 4 57 43" src="https://user-images.githubusercontent.com/68367329/103989273-cda42200-51d2-11eb-8741-c4fbfe849fea.png">
+  
+- YOLOv1, v2 에서 겪었던 멀티라벨 문제를 해결하기 위해 클래스 확률을 구할 때 softmax에서 sigmoid 를 사용했다.
+- 멀티라벨 문제란 하나의 사물이 여러개의 라벨을 가질 수 있음에도 불구하고, 하나의 사물에 하나의 라벨만 배정되는 문제를 말한다.
+- sigmoid 를 사용하게 되면 연산량도 줄어들뿐만아니라 멀티라벨 문제를 해결할 수 있어 복잡한 데이터셋에서도 좋은 성능을 나타낼 수 있다는 장점이 있다.
+<img width="1176" alt="스크린샷 2021-01-08 오후 5 20 17" src="https://user-images.githubusercontent.com/68367329/103991352-e19d5300-51d5-11eb-9b18-eebf8fe01f46.png">
+
 
 
