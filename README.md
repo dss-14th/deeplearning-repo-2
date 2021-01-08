@@ -76,7 +76,7 @@
 #### (2) [YOLO v1](https://github.com/dss-14th/deeplearning-repo-2/blob/main/YOLO_v1.md)
 #### (3) [YOLO v2]()
 #### (4) [YOLO v3](https://github.com/dss-14th/deeplearning-repo-2/blob/main/YOLO_v3.md)
-#### (5) [YOLO v3 Pytorch]()
+#### (5) [YOLO v3 Pytorch](https://github.com/dss-14th/deeplearning-repo-2/blob/main/YOLO_v3_torch.md)
   - YOLOv3 를 Pytorch 로 구현하는 코드는 이 [Github Repo](https://github.com/ayooshkathuria/YOLO_v3_tutorial_from_scratch)의 코드를 참고했습니다.
 
 
