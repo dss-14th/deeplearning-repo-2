@@ -1,9 +1,9 @@
 # YOLO(You Only Look Once)!
 [발표자료 다운로드(pdf)](https://github.com/dss-14th/deeplearning-repo-2/files/5764532/YOLO.You.only.look.once.pdf)
 
-## 1. Image detection with Yolov5 
+### 1. Image detection with Yolov5 
 
-### *✏ Before start*
+#### *✏ Before start*
 - **YOLO v5 git clone**
   - https://github.com/ultralytics/yolov5
   - !git clone https://github.com/ultralytics/yolov5.git
@@ -13,11 +13,11 @@
   - !pip install -r requirements.txt 
   
 
-### *⚙ Preprocessing & training*
+#### *⚙ Preprocessing & training*
 
 <img src = "https://user-images.githubusercontent.com/67793544/103855312-c3f8bc80-50f5-11eb-9769-af65e155ff59.png">
 
-### (1) CCTV dataset
+##### (1) CCTV dataset
 ---
 - **dataset 구성**
   - train: 9 internal CCTV images of the mall
@@ -53,7 +53,7 @@
 
 <p align='center'><img src = 'https://user-images.githubusercontent.com/67793544/103859831-163ddb80-50fe-11eb-9481-9d527986275a.gif'></p>
 
-### (2) BLACKPINK dataset
+##### (2) BLACKPINK dataset
 ---
 - **dataset 구성**
   - train video: 
