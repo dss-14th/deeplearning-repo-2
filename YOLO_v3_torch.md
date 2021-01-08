@@ -35,11 +35,17 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 ResNet에서 사용하는
 - 이를 위해 predict_transform 함수를 사용한다.
 - 한 피쳐 맵에서 grid 사이즈와 stride 는 같은 값을 가진다. ( 그리드 사이즈만큼 이동해서 anchor box 를 지정해야 하기 때문)
 - anchors 의 총 갯수는 3*3=9 개이고, 하나의 그리드당 3개의 앵커박스를 가진다.
-- anchors 에 있는 수치는 anchor box의 너비와 높이를 의미하며, 이를 해당 grid size 로 나눠 비율을 구한다. 
-
   <img width="873" alt="스크린샷 2021-01-08 오후 4 56 12" src="https://user-images.githubusercontent.com/68367329/103989260-c7ae4100-51d2-11eb-9a86-10f55529b838.png">
+  
+- anchors 에 있는 수치는 anchor box의 너비와 높이를 의미하며, 이를 해당 grid size 로 나눠 비율을 구한다. 
   <img width="873" alt="스크린샷 2021-01-08 오후 4 56 43" src="https://user-images.githubusercontent.com/68367329/103989270-cd0b8b80-51d2-11eb-8800-83f6be4eeb06.png">
+  
+- 
   <img width="873" alt="스크린샷 2021-01-08 오후 4 57 03" src="https://user-images.githubusercontent.com/68367329/103989271-cd0b8b80-51d2-11eb-8339-8bc148868f25.png">
+  
+- offset 을 지정하는 코드이다.
+- 52 by 52 feature map 의 경우 (0,0), ... (51,51) 의 offset 행렬을 생성한다. 
+- 이후 그리드 상에서 바운딩 박스의 좌표(0~1사이 값)를 offset에 더해주며 최종 바운딩 박스의 좌표 정보를 구한다. 
   <img width="873" alt="스크린샷 2021-01-08 오후 4 57 43" src="https://user-images.githubusercontent.com/68367329/103989273-cda42200-51d2-11eb-8741-c4fbfe849fea.png">
 
 
