@@ -30,8 +30,8 @@ YOLOv3 의 경우 Darknet-53 를 backbone으로 하며 ResNet에서 사용하는
   <img width="873" alt="스크린샷 2021-01-07 오후 5 39 57" src="https://user-images.githubusercontent.com/68367329/103871728-c7e60800-5110-11eb-92a2-fe1f0e98d56e.png">
 
 
-#### 2. forward layer
+#### 2. predict_transform 함수
+- 3개의 크기가 다른 피쳐 맵에서 prediction이 이뤄지기 때문에 detection layer 의 아웃풋값을 같은 scale 로 맞춰 주는것이 필요하다. 
+- 이를 위해 predict_transform 함수를 사용한다.
 
-
-#### 3. train 함수  
 
