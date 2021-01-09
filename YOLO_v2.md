@@ -1,66 +1,74 @@
-### YOLOv3
-#### [paper](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
+YOLOv2
+===================
+#### [paper](https://arxiv.org/pdf/1612.08242.pdf)
+
+## Introduction
+- YOLO v1의 문제점을 보완한 YOLO v2 소개 및 이를 기반으로 9000개 이상의 물체를 탐지할 수 잇는 YOLO 9000을 소개한다.
+- YOLO v2는 PASCAL VOC 및 COCO와 같은 표준 탐지 작업에서 최첨단이다.
+- YOLO v2는 VOC 2007에서 67 FPS일때 76.8 mAP이며 40 FPS일때 78.6 mAP를 가진다. ResNet 및 SSD를 활용한 Faster RCNN과 같은 아이들을 능가하면서도 여전히 훨씬 빠르게 작동한다.
+- 3개의 Chapter로 나누어 설명한다.
+  - Better
+  - Faster
+  - Stronger
+
+************
+### 1. Better
+- YOLO v1dms Fast R-CNN과 비교햇을 때 localization errors가 나타난다. 더불어, region proposal-based methods에 비교했을 때 낮은 recall 값을 갖는다.   
+Better Chapter에서는 정확성과 Recall 값을 높은 방법에 대해 설명한다.
 
 
-#### 1. bounding box prediction
-- yolov3 는 yolo9000과 같이 차원 클러스터링을 통해 앵커 박스로부터 바운딩 박스를 예측한다. 욜로 네트워크는 각 바운딩 박스로부터 4개의 좌표를 예측하고(tx, ty, tw, th), 각 그리드셀의 왼쪽 상단 지점을 기준으로 셀 내부의 위치를 예측해 최종 바운딩 박스 정보를 결정한다.(bx,by, bw, bh)
+#### 1) Batch Normalization
+- YOLO의 모든 Convolutional layer에 Batch Normalization을 추가함으로써 mAP가 2% 이상 개선된다.
+>   > Batch Normalization 설명 참조 : [Time Traveler](https://89douner.tistory.com/44?category=868069)
 
 
-<p align="center"><img width="487" alt="스크린샷 2021-01-06 오후 1 03 47" src="https://user-images.githubusercontent.com/68367329/103729548-05209c00-5024-11eb-92bb-9f5a1da998fd.png"></p>
-
-- yolov3 는 이진 분류를 통해 objectness score (바운딩 박스에 물체가 있는지 없는지에 대한 확률점수) 를 예측한다. ground truth box(정답으로 라벨링된 박스)와 IOU 가 가장 높은 바운딩 박스의 objectness score 는 1이 되어야 한다. 이 바운딩 박스를 제외한 objectness 가 threshold 값인 0.5를 넘는 값을 가진 바운딩 박스들은 모두 무시한다. 이전 yolo 버전과 다르게, 하나의 ground truth box 에 대해 하나의 바운딩 박스를 할당한다. ground truth box 에 할당되지 않은 바운딩 박스들은 좌표나 분류 예측예 대한 손실값을 반영하지 않는다. 
-
-#### 2. class prediction
-- yolov2 의 경우, 클래스 분류시 소프트맥스를 사용해 하나의 대상에 대해 하나의 클래스만 대응되어, 멀티 라벨이 불가능하다는 문제가 있었다. yolov3 는 이를 해결하기 위해 시그모이드를 사용해 binary cross-entropy loss를 사용하면서 멀티라벨을 가능하게 했다. (ex) 여자, 사람)
-
-
-#### 3. predictions across scales
-- yolov3 는 3개의 다른 scale 에서 앵커박스들을 생성하고, 바운딩 박스를 예측한다. 
-
-<p align='center'><img width="1342" alt="스크린샷 2021-01-06 오후 1 18 52" src="https://user-images.githubusercontent.com/68367329/103729815-9c85ef00-5024-11eb-9796-0822e9d50e6d.png"></p>
-
-코코데이터셋에서의 각 피처맵당 생성되는 정보는 다음 수식으로 계산될 수 있다.
-
-<p align='center'><img width="198" alt="스크린샷 2021-01-06 오후 3 42 17" src="https://user-images.githubusercontent.com/68367329/103737581-ce538180-5035-11eb-8512-e17617b29c36.png"></p>
-
-  - N : 각 scale 당 그리드셀 크기(13,26,52), 4개의 바운딩박스 좌표, 1개 objectness , 80개의 클래스 예측
-
-52*52, 26*26, 13*13 feature map을 각각 f_52, f_26, f_13 이라고 했을 시, f_26 은 *2 업샘플링, f_13은 *4 업샘플링을 통해 f_52의 정보와 합친다. 이 방법을 통해 초기 특징맵에서 (f_52, f_26) 더 정교하고 의미있는 정보를 얻을 수 있다. 이를 통해 비슷한 tensor 로 예측할 수 있게 되었다. 
-
-또한 미리 바운딩 박스의 갯수를 결정하기 위해 k-means dimension clustering을 사용해 총 9개의 앵커박스의 갯수를 지정했다. 3개의 피처맵당 3개의 앵커박스가 사용된다.(3*3=9개의 anchor box)
-
-#### 4. yolov1, yolov2 와 비교 
-
-<img width="976" alt="스크린샷 2021-01-06 오후 1 20 26" src="https://user-images.githubusercontent.com/68367329/103729658-46b14700-5024-11eb-9fbc-cdc65bb26614.png">
+#### 2) High Resolution Classifier
+- 원래 YOLO v1은 224x224로 훈련시킨 모델을 사용하지만 detection을 위해 Input Image size를 448x448로 키운다.   
+그래서 YOLO v1은 448x448 Image의 detection이 잘 되지 않으며 성능이 저하된다.
+- YOLO v2는 detection 전에 Classification Network에 448x448 고해상도로 fine-tuning해서 4%의 mAP증가로 해결한다.   
+  - _YOLO v1과 달리 Darknet-19모델을 기반으로 사용했기에 가능_
 
 
-#### 5. feature extractor
-- yolov3 에 대해 새로운 feature extractor를 사용한다. 우리의 새로운 네트워크는 YOLOv2 구조 및 YOLOv2의 backbone 이었던 Darknet-19 와 residual network 로 구성되어있다. 연속적인 3 by 3, 1by 1 컨볼루션 레이어를 사용하며, shortcut connection을 사용해 상대적으로 커졌다. 총 53개의 컨볼루션 레이어로 구성된다.(Darknet-53)
-Darknet-53 은 Darknet-19보다 강력하고, ResNet-101, ResNet-152 보다 효과적이다.
+ #### 3) Convolutional With Anchor Boxes
+``` 
+Faster RCNN의 RPN은 예측계층에 Convolution layer만 사용해 직접 좌표를 예측하지 않으며 이전에 선택했던 Anchor Box를 이용해서 
+Bounding Box를 예측한다. (Anchor Box에 대한 offset, 신뢰도를 예측) 좌표대신 offset을 예측하면 문제가 단순화되고 
+Network가 더 쉽게 학습할 수 있다.
+```
+ - YOLO v2는 YOLO v1에서 Fully Connected layer 제거 후 Convolution layer를 사용한다.
+ - Anchor Box 도입하여 Bounding Box를 예측한다.
 
-<p align="center"><img width="250" alt="스크린샷 2021-01-06 오후 1 04 27" src="https://user-images.githubusercontent.com/68367329/103729593-21bcd400-5024-11eb-9256-759d7fa922f0.png"></p>
+> YOLO v1은 7x7인 cell의 크기가 작아 저해상도 상태로 detection하는 것과 같다. 또한, YOLO v1은 7x7x2=98 개의 Bounding Box로 적은 양이기에 Recall값이 낮다.
+- Convolution Network의 출력을 더 높은 해상도로 만들기 위해 하나의 Pooling layer를 제거한다.
+- Anchor Box를 기존 보다 3개 더 많은 5개로 설정 해준다.
+- 7x7에서 13x13으로 변경을 통해 Recall 값을 향상시킨다.
+> Output Feature map이 13x13인 이유 :   
+  Network를 축소해 448x448이 아닌 416x416 Input Image로 작동시킨다.   
+  이는 물체가 이미지의 중심을 차지하는 경향이 있기 때문에 홀수x홀수로 Output Feature map을 설정하는 것이 좋기 때문이다.   
+  그래서 416x416으로 Image를 입력하여 13x13 Output Feature map을 얻는다.
+  
+- YOLO v2는 Anchor Box를 활용한 Object예측은 ground truth와의 proposed box의 IOU를 통해 예측한다.
+- Class예측은 물체가 있는 경우 해당 class의 조건부 확률을 예측한다.
 
-##### 1 by 1 convolutional layer
+```
+Anchor Box 사용시 정확도는 낮아진다고 한다.
+Anchor Box 사용하지 않은 모델은 Recall 81%인 69.5mAP 이며
+Anchor Box 사용한 모델은 Recall 88%인 69.2mAP를 얻는다.
+mAP은 감소했지만 Recall의 증가는 모델이 개선할 여지가 많다는 것을 의미한다.
+```
 
-맥스 풀링 단점 : 특성 맵 자체가 작아지면서 정보가 소실되어 이미지의 해상도가 낮아진다. 1 by 1 convolutional layer 의 경우 특성맵의 크기는 유지한 채, 필터의 갯수를 적게 사용해 이전 레이어보다 차원을 줄인다.이를 통해 특성 맵의 이미지 정보를 압축시킨다.
 
-#### 6. Things We Tried That Didn't Work
+#### 4) Dimension Clusters
+- 좋은 Anchor Box를 선정하기 위해 (Train dataset에 있는) ground truth bounding box에 K-means Clustering 방법을 사용해서 최적의 Anchor Box를 찾고자 한다.
+  - Anchor Box를 도입하면서 2가지의 문제점이 발생한다.   
+  첫째, Box dimensions을 hand picked 된다는 것이다. (다른 하나는 Direct location prediction에서 다룬다.)   
+  이를 Network가 학습해서 할 수 있지만, 사전에 좋은 Anchor Box를 선정한다면 object detection을 더 잘 할 것이라 생각하기에 K-means Clustering 활용한다.
+- K-means는 원래 Euclidean distance를 활용한다. 하지만, YOLO에서는 유클리드 사용시 큰 box에서 error가 많이 발생한다.
+>   > Error 설명 참조 : [Time Traveler-Dimension clusters](https://89douner.tistory.com/93)
+- Box 크기와 무관한 IOU를 적용한 distance-metric을 제안하여 더 좋은 Anchor Box를 추출한다.
+- 연구에 따라 Anchor Box는 5개로 설정하는것이 좋은 결과라 한다.
 
-아래 방법은 Yolov3 를 개발하는 동안 시도했던 시행착오들이다. 
+![dimension cluster](https://user-images.githubusercontent.com/68367334/104083145-9b043300-527f-11eb-83fc-a660465348b2.png)
 
-- Anchor box x, y offset predictions 
-  - 처음엔 linear activation function을 활용해 width와 height 의 곱으로 x,y offset을 예측하는 일반적인 앵커박스 예측 매커니즘을 따르려고 했다. 그러나 이 방식이 모델의 안정성을 떨어트리고, 성능도 떨어트린다는 것을 알게 되었다.
-- Linear x,y predictions instead of logistic
-  - logistic activation 대신 linear activation 을 사용해 바로 x,y offset 을 예측하려 했으나 mAP 가 2점 하락하는 결과를 가져왔다.
 
-- Focal loss 
-  - focal loss 를 사용하려 했으나 mAP 를 2점 떨어뜨렸다. 아마 YOLOv3가 자체 objectness 점수와 조건부 클래스 예측을 가지고 있어  focal loss 가 풀고자 하는 문제에 이미 대응할 수 있기 때문일 것이다.
-
-- Dual IOU thresholds and truth assignment
-  - Faster RCNN 은 트레이닝 단계에서 2개의 IOU threshold(0.3, 0.7)를 사용한다. 바운딩박스와 ground truth box 의 IOU 값이 0.7 이상인 경우 positive example, 0.3-0.7 사이의 경우 무시, 0.3 이하일 경우 negative example 로 간주한다. 이러한 방식을 YOLOv3 에 적용하고자 했지만 좋은 결과를 가져오지 못했다.
-
-#### 7. result
-YOLOv3 와 다른 모델들에 대해 COCO 데이터셋의 mAP metric 을 비교해보았을 때, SSD 기준 3배가 빠르며, RetinaNet 보다는 조금 느리다. 그러나 AP50 을 비교해보았을 때, RetinaNet 과
-비슷한 성능을 보인다.
-
-<p align ='center'><img width="605" alt="스크린샷 2021-01-06 오후 3 58 31" src="https://user-images.githubusercontent.com/68367329/103738864-107dc280-5038-11eb-9b02-4f84879b07ed.png"></p>
+#### 5) Direct location prediction
