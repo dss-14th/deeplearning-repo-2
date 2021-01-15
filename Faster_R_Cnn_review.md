@@ -1,5 +1,5 @@
 # 논문  
-- [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf)
+- [paper](https://proceedings.neurips.cc/paper/2015/file/14bfa6bb14875e45bba028a21ed38046-Paper.pdf)
 
 
 - [Sources](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
@@ -18,7 +18,7 @@
 - 하나는 각 conv feature map을 짧은(256-d) feature vector 로 인코딩 하는 것이고, 다른 하나는 각 conv map position에서  다양한 스케일과 비율에 상대적인 k region proposal로써 objectness score와 regressed bound를 출력하는 것입니다.
 - Faster R-CNN은 기존의 Fast R-CNN에 Region proposal network을 추가한 것이 핵심이라고 볼 수 있습니다.
 
-<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-16-18-49.png" width="40%" height="75%" alt="process">
+<p align='center'><img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-16-18-49.png" width="40%" height="75%" alt="process"></p>
 
 # RPN
 - RPN 은 모든크기의 이미지를 input으로 가져와 objectness score가 들어있는 직사각형에 객체로 출력합니다. 
@@ -28,7 +28,7 @@
 - 이 벡터는 두 개의 FCN 이고, layer(reg)와 layer(cls) 입니다.
 - 다시말해 RPN은 n × n 컨볼루션에 이어서 두 개의 1 × 1 컨볼루션으로 구현됩니다. 하지만, 이처럼 단순하게 RPN을 설계할 경우 문제가 발생할 수 있습니다. 
 
-<img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-20-01-41.png" width="40%" height="75%" alt="process">
+<p align='center'><img src="https://bloglunit.files.wordpress.com/2017/05/20170525-research-seminar-google-slides-2017-05-31-20-01-41.png" width="40%" height="75%" alt="process"></p>
 
 
 
