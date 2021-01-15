@@ -60,4 +60,4 @@
 - 앞서 말씀드린 Faster R-CNN 논문에는 기술되어 있지 않지만, 위 Alternating optimization의 복잡한 학습방법 대신, RPN의 loss function과 Fast R-CNN의 loss function을 모두 합쳐 multi-task loss로 둔 뒤, 한 번에 학습을 진행해도 Alternating optimization 방법과 거의 동일하거나 높은 성능이 나올 수 있음을 실험적으로 증명하였습니다. 이를 통해 단 한번의 학습과정으로 더욱 빠르게 Faster R-CNN 구조를 학습할 수 있습니다.
 
 # 참조
-- [Source](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
+- [https://blog.lunit.io/2017/06/01/r-cnns-tutorial/](https://blog.lunit.io/2017/06/01/r-cnns-tutorial/)
